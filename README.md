@@ -1,5 +1,4 @@
-# Enedis Data Connect API
-## A small library to use a part of Enedis Data Connect API with PHP
+# Enedis Data Connect API: a small library to use a part of Enedis Data Connect API with PHP
 
 Firstly developped to be used in [aeneria](https://gitlab.com/aeneria/aeneria-app), this small library let you use easily
 [Enedis Data Connect API](https://datahub-enedis.fr/data-connect/).
@@ -19,7 +18,7 @@ Then, install the library with composer:
 composer require aeneria/enedis-data-connect
 ```
 
-Now you are ready to start using it:
+Now you are ready to start using it.
 
 If you are using a framework such as Symfony, you can declare a service and use it with
 dependency injection:
@@ -37,7 +36,7 @@ services:
             $clientSecret: "YOUR_CLIENT_SECRET"
 ```
 
-Or easer declare it in your code :
+Or declare it in your code this way:
 
 ```php
 <?php
@@ -57,7 +56,7 @@ $dataConnect = new DataConnectService(
 
 ```
 
-Then you can use the API this way :
+Then you can use the API:
 
 ```php
 <?php
@@ -103,4 +102,4 @@ $meteringData = $dataConnect->requestProductionLoadCurve(
 
 ## Support
 
-Feel free to [open an issue](https://gitlab.com/aeneria/enedis-data-connect/-/issues) !
+Feel free to [open an issue](https://gitlab.com/aeneria/enedis-data-connect/-/issues)!
