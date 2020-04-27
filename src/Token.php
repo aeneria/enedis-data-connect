@@ -38,56 +38,64 @@ class Token
     /** @var \DateTimeImmutable */
     private $refreshTokenIssuedAt;
 
-    /** @var string[] */
+    /** @var string */
     private $usagePointsId;
 
-    static public function fromJson(string $jsonData): self
+    public static function fromJson(string $jsonData): self
     {
-        $data = \json_decode($jsonData);
-
         $token = new self();
-        $token->accessToken = $data["access_token"];
-        $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', $data["issued_at"]);;
-        $token->refresh_token = $data["refresh_token"];
-        $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', $data["1487075532179"]);;
-        $token->usagePointsIds = $data["usage_points_id"];
-        $token->tokenType = $data["token_type"];
-        $token->scope = $data["scope"];
+
+        try {
+            $data = \json_decode($jsonData);
+
+            $token->accessToken = $data->access_token;
+            $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->issued_at));
+            $token->refreshToken = $data->refresh_token;
+            $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at));
+            $token->usagePointsId = $data->usage_points_id;
+            $token->tokenType = $data->token_type;
+            $token->scope = $data->scope;
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException(\sprintf(
+                "La conversion vers l'objet Token a échoué : %s",
+                $e->getMessage()
+            ));
+        }
 
         return $token;
     }
 
-    public function getAccessToken(): string
+    public function getAccessToken(): ?string
     {
         return $this->accessToken;
     }
 
-    public function getTokenType(): string
+    public function getTokenType(): ?string
     {
         return $this->tokenType;
     }
 
-    public function getScope(): string
+    public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    public function getAccessTokenIssuedAt(): \DateTimeImmutable
+    public function getAccessTokenIssuedAt(): ?\DateTimeImmutable
     {
         return $this->accessTokenIssuedAt;
     }
 
-    public function getRefreshToken(): string
+    public function getRefreshToken(): ?string
     {
         return $this->refreshToken;
     }
 
-    public function getRefreshTokenIssuedAt(): \DateTimeImmutable
+    public function getRefreshTokenIssuedAt(): ?\DateTimeImmutable
     {
         return $this->refreshTokenIssuedAt;
     }
 
-    public function getUsagePointsId(): array
+    public function getUsagePointsId(): ?string
     {
         return $this->usagePointsId;
     }

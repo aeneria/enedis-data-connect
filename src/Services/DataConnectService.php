@@ -3,13 +3,12 @@
 namespace Aeneria\EnedisDataConnectApi\Services;
 
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectConsentException;
+use Aeneria\EnedisDataConnectApi\Exception\DataConnectDataNotFoundException;
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectException;
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectQuotaExceededException;
-use Aeneria\EnedisDataConnectApi\Exception\DataConnectDataNotFoundException;
 use Aeneria\EnedisDataConnectApi\MeteringData;
 use Aeneria\EnedisDataConnectApi\Token;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
@@ -19,13 +18,16 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 class DataConnectService
 {
+    const GRANT_TYPE_CODE = 'authorization_code';
+    const GRANT_TYPE_TOKEN = 'refresh_token';
+
     private $authEndpoint;
     private $meteringDataEndpoint;
 
     private $clientId;
     private $clientSecret;
 
-    public function __construct (string $authEndpoint, string $meteringDataEndpoint, string $clientId, string $clientSecret)
+    public function __construct(string $authEndpoint, string $meteringDataEndpoint, string $clientId, string $clientSecret)
     {
         $this->authEndpoint = $authEndpoint;
         $this->meteringDataEndpoint = $meteringDataEndpoint;
@@ -35,28 +37,23 @@ class DataConnectService
     }
 
     /**
-     * Get a redirect response to DataConnect consent page.
+     * Get a URL to DataConnect consent page.
      *
-     * @var string $duration Durée du consentement demandé par l’application,
+     * @var string Durée du consentement demandé par l’application,
      * au format ISO 8601. Cette durée sera affichée au consommateur et ne peut
      * excéder 3 ans.
      *
-     * @var string $state Paramètre de sécurité permettant de maintenir l’état
+     * @var string Paramètre de sécurité permettant de maintenir l’état
      * entre la requête et la redirection.
      */
-    public function getRedirectResponseToConsentPage(string $duration, string $state): RedirectResponse
+    public function getConsentPageUrl(string $duration, string $state): string
     {
-        return RedirectResponse::create(
-            \sprintf('%s/dataconnect/v1/oauth2/authorize', $this->authEndpoint),
-            RedirectResponse::HTTP_FOUND,
-            [
-                'query' => [
-                    'client_id' => $this->clientId,
-                    'response_type' => 'code',
-                    'state' => $state,
-                    'duration' => $duration
-                ]
-            ]
+        return \sprintf(
+            '%s/dataconnect/v1/oauth2/authorize?client_id=%s&response_type=code&state=%s&duration=%s',
+            $this->authEndpoint,
+            $this->clientId,
+            $state,
+            $duration
         );
     }
 
@@ -65,7 +62,7 @@ class DataConnectService
      */
     public function requestDataConnectTokensFromCode(string $code): Token
     {
-        return $this->requestToken('authorization_code', '', $code);
+        return $this->requestToken(self::GRANT_TYPE_CODE, $code);
     }
 
     /**
@@ -73,25 +70,38 @@ class DataConnectService
      */
     public function requestDataConnectTokensFromRefreshToken(string $refreshToken): Token
     {
-        return $this->requestToken('refresh_token', $refreshToken);
+        return $this->requestToken(self::GRANT_TYPE_TOKEN, $refreshToken);
     }
 
-    private function requestToken(string $grantType, string $refreshToken = '', string $code = ''): Token
+    private function requestToken(string $grantType, string $codeOrToken): Token
     {
+        $body = [
+            'grant_type' => $grantType,
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'redirect_uri' => "http://app.aeneria.com",
+        ];
+
+        switch ($grantType) {
+            case self::GRANT_TYPE_CODE:
+                $body['code'] = $codeOrToken;
+                break;
+            case self::GRANT_TYPE_TOKEN:
+                $body['refresh_token'] = $codeOrToken;
+                break;
+            default:
+                throw new \InvalidArgumentException(\sprintf(
+                    'Only "%s" or "%s" grant types are supported',
+                    self::GRANT_TYPE_TOKEN,
+                    self::GRANT_TYPE_CODE
+                ));
+        }
+
         $response = HttpClient::create()->request(
             'POST',
             \sprintf('%s/v1/oauth2/token', $this->authEndpoint),
             [
-                'headers' => [
-                    'Content-Type' => 'application/x-www-form-urlencoded'
-                ],
-                'query' => [
-                    'client_id' => $this->clientId,
-                    'client_id' => $this->clientSecret,
-                    'grant_type' => $grantType,
-                    'refresh_token' => $refreshToken,
-                    'code' => $code,
-                ]
+                'body' => $body,
             ]
         );
 
@@ -109,8 +119,8 @@ class DataConnectService
     public function requestConsumptionLoadCurve(string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end, string $accessToken): MeteringData
     {
         return $this->requestMeteringData(
-            'daily_consumption',
-            MeteringData::TYPE_DAILY_CONSUMPTION,
+            'consumption_load_curve',
+            MeteringData::TYPE_CONSUMPTION_LOAD_CURVE,
             $accessToken,
             $usagePointId,
             $start,
@@ -126,8 +136,8 @@ class DataConnectService
     public function requestDailyConsumption(string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end, string $accessToken): MeteringData
     {
         return $this->requestMeteringData(
-            'consumption_load_curve',
-            MeteringData::TYPE_CONSUMPTION_LOAD_CURVE,
+            'daily_consumption',
+            MeteringData::TYPE_DAILY_CONSUMPTION,
             $accessToken,
             $usagePointId,
             $start,
@@ -146,19 +156,19 @@ class DataConnectService
             [
                 'headers' => [
                     'accept' => 'application/json',
-                    'Authorization' => \sprintf('Bearer %s', $accessToken),
                 ],
+                'auth_bearer' => $accessToken,
                 'query' => [
                     'usage_point_id' => $usagePointId,
-                    'start' => $start->format('Y-M-d'),
-                    'end' => $end->format('Y-M-d'),
-                ]
+                    'start' => $start->format('Y-m-d'),
+                    'end' => $end->format('Y-m-d'),
+                ],
             ]
         );
 
         $this->checkResponse($response);
 
-        return MeteringData::fromJson($response->getContent(), MeteringData::TYPE_DAILY_CONSUMPTION);
+        return MeteringData::fromJson($response->getContent(), $dataType);
     }
 
     private function checkResponse(ResponseInterface $response): void
@@ -166,18 +176,15 @@ class DataConnectService
         $code = $response->getStatusCode();
 
         if (200 !== $code) {
-            $result = \json_decode($response->getContent());
-            $message = $result["error_description"] ?? '';
-
             switch ($code) {
                 case 403:
-                    throw new DataConnectConsentException($message, $code);
+                    throw new DataConnectConsentException($response->getContent(false), $code);
                 case 404:
-                    throw new DataConnectDataNotFoundException($message, $code);
+                    throw new DataConnectDataNotFoundException($response->getContent(false), $code);
                 case 429:
-                    throw new DataConnectQuotaExceededException($message, $code);
+                    throw new DataConnectQuotaExceededException($response->getContent(false), $code);
                 default:
-                    throw new DataConnectException($response->getContent, $response->getStatusCode());
+                    throw new DataConnectException($response->getContent(false), $code);
             }
         }
     }

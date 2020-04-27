@@ -11,24 +11,20 @@
     ],
     "require": {
         "php": "^7.3",
-        "symfony/http-client": "5.0.*",
-        "symfony/http-foundation": "5.0.*"
+        "symfony/http-client": "5.0.*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "phpunit/phpunit": "^8.5",
-        "symfony/phpunit-bridge": "^5.0",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {
-            "aeneria\\EnedisDataConnectApi\\" : "src/"
+            "Aeneria\\EnedisDataConnectApi\\" : "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "aeneria\\EnedisDataConnectApi\\Tests\\": "tests/"
+            "Aeneria\\EnedisDataConnectApi\\Tests\\": "tests/"
         }
     }
 }
