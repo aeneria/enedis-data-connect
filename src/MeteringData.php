@@ -31,7 +31,9 @@ namespace Aeneria\EnedisDataConnectApi;
 class MeteringData
 {
     const TYPE_CONSUMPTION_LOAD_CURVE = 'CONSUMPTION_LOAD_CURVE';
+    const TYPE_PRODUCTION_LOAD_CURVE = 'PRODUCTION_LOAD_CURVE';
     const TYPE_DAILY_CONSUMPTION = 'DAILY_CONSUMPTION';
+    const TYPE_DAILY_PRODUCTION = 'DAILY_PRODUCTION';
 
     /** @var string */
     private $usagePointId;

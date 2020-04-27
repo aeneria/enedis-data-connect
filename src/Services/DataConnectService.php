@@ -111,7 +111,7 @@ class DataConnectService
     }
 
     /**
-     * Get load curve between 2 dates for a usage point.
+     * Get consumption load curve between 2 dates for a usage point.
      *
      * Récupérer la puissance moyenne consommée quotidiennement,
      * sur l'intervalle de mesure du compteur (par défaut 30 min)
@@ -129,6 +129,24 @@ class DataConnectService
     }
 
     /**
+     * Get production load curve between 2 dates for a usage point.
+     *
+     * Récupérer la puissance moyenne produite quotidiennement,
+     * sur l'intervalle de mesure du compteur (par défaut 30 min)
+     */
+    public function requestProductionLoadCurve(string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end, string $accessToken): MeteringData
+    {
+        return $this->requestMeteringData(
+            'production_load_curve',
+            MeteringData::TYPE_PRODUCTION_LOAD_CURVE,
+            $accessToken,
+            $usagePointId,
+            $start,
+            $end
+        );
+    }
+
+    /**
      * Get daily consumption between 2 dates for a usage point.
      *
      * Récupérer la consommation quotidienne
@@ -138,6 +156,23 @@ class DataConnectService
         return $this->requestMeteringData(
             'daily_consumption',
             MeteringData::TYPE_DAILY_CONSUMPTION,
+            $accessToken,
+            $usagePointId,
+            $start,
+            $end
+        );
+    }
+
+    /**
+     * Get daily production between 2 dates for a usage point.
+     *
+     * Récupérer la production quotidienne
+     */
+    public function requestDailyProduction(string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end, string $accessToken): MeteringData
+    {
+        return $this->requestMeteringData(
+            'daily_production',
+            MeteringData::TYPE_DAILY_PRODUCTION,
             $accessToken,
             $usagePointId,
             $start,
