@@ -49,9 +49,9 @@ class Token
             $data = \json_decode($jsonData);
 
             $token->accessToken = $data->access_token;
-            $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->issued_at));
+            $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->issued_at / 1000));
             $token->refreshToken = $data->refresh_token;
-            $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at));
+            $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at / 1000));
             $token->usagePointsId = $data->usage_points_id;
             $token->tokenType = $data->token_type;
             $token->scope = $data->scope;

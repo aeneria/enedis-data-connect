@@ -4,6 +4,7 @@ namespace Aeneria\EnedisDataConnectApi\Tests\Functional\Services;
 
 use Aeneria\EnedisDataConnectApi\MeteringData;
 use Aeneria\EnedisDataConnectApi\Services\DataConnectService;
+use Aeneria\EnedisDataConnectApi\Token;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -36,10 +37,15 @@ final class DataConnectServiceTest extends TestCase
 
         $token = $dataConnect->requestDataConnectTokensFromCode($param['code']);
 
+        self::assertInstanceOf(Token::class, $token);
         self::assertSame($param['usage_point_id'], $token->getUsagePointsId());
         self::assertNotNull($token->getRefreshToken());
 
         $token = $dataConnect->requestDataConnectTokensFromRefreshToken($token->getRefreshToken());
+
+        self::assertInstanceOf(Token::class, $token);
+        self::assertNotNull($token->getRefreshToken());
+        self::assertNotNull($token->getAccessToken());
 
         $meteringData = $dataConnect->requestDailyConsumption(
             $token->getUsagePointsId(),
