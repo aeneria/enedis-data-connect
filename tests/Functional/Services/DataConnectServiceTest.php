@@ -26,7 +26,9 @@ final class DataConnectServiceTest extends TestCase
         $token = $this->gettingConsent($dataConnect);
         $token = $this->gettingAccessToken($dataConnect, $token);
         $this->gettingConsumptionData($dataConnect, $token);
-        $this->gettingProductionData($dataConnect, $token);
+
+        // My client Id currently can't get production data;, it's outside my authorized scope !
+        // $this->gettingProductionData($dataConnect, $token);
     }
 
     private function gettingConsent(DataConnectService $dataConnect): Token
@@ -47,7 +49,7 @@ final class DataConnectServiceTest extends TestCase
         self::assertArrayHasKey('code', $param);
         self::assertArrayHasKey('usage_point_id', $param);
 
-        $token = $dataConnect->requestDataConnectTokensFromCode($param['code']);
+        $token = $dataConnect->requestTokenFromCode($param['code']);
 
         self::assertInstanceOf(Token::class, $token);
         self::assertSame($param['usage_point_id'], $token->getUsagePointsId());
@@ -58,7 +60,7 @@ final class DataConnectServiceTest extends TestCase
 
     private function gettingAccessToken(DataConnectService $dataConnect, Token $token): Token
     {
-        $token = $dataConnect->requestDataConnectTokensFromRefreshToken($token->getRefreshToken());
+        $token = $dataConnect->requestTokenFromRefreshToken($token->getRefreshToken());
 
         self::assertInstanceOf(Token::class, $token);
         self::assertNotNull($token->getRefreshToken());

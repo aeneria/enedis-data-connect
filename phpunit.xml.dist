@@ -9,8 +9,8 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="SHELL_VERBOSITY" value="-1" />
-        <env name="CLIENT_ID" value="[client_id]" />
-        <env name="CLIENT_SECRET" value="[client_secret]" />
+        <env name="CLIENT_ID" value="%%CLIENT_ID%%" />
+        <env name="CLIENT_SECRET" value="%%CLIENT_SECRET%%" />
     </php>
 
     <testsuites>

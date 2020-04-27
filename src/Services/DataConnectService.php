@@ -60,7 +60,7 @@ class DataConnectService
     /**
      * Get DataConnectToken from a grant code.
      */
-    public function requestDataConnectTokensFromCode(string $code): Token
+    public function requestTokenFromCode(string $code): Token
     {
         return $this->requestToken(self::GRANT_TYPE_CODE, $code);
     }
@@ -68,7 +68,7 @@ class DataConnectService
     /**
      * Get DataConnectToken from a refreshToken.
      */
-    public function requestDataConnectTokensFromRefreshToken(string $refreshToken): Token
+    public function requestTokenFromRefreshToken(string $refreshToken): Token
     {
         return $this->requestToken(self::GRANT_TYPE_TOKEN, $refreshToken);
     }
