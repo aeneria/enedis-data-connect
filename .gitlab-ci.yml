@@ -22,4 +22,4 @@ test:phpunit:
     - php composer.phar install
     - sed -i -e 's/[client_id]/${ENEDIS_CLIENT_ID}/g' phpunit.xml
     - sed -i -e 's/[client_secret]/${ENEDIS_CLIENT_SECRET}/g' phpunit.xml
-    - php bin/phpunit --coverage-text --colors=never
+    - php vendor/bin/phpunit --coverage-text --colors=never
