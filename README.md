@@ -26,11 +26,11 @@ use it with dependency injection:
 # config/services.yaml
 
 services:
-    Aeneria\DataConnectService:
-        class: Aeneria\DataConnectService
+    Aeneria\EnedisDataConnectApi\Services\DataConnectService:
+        class: Aeneria\EnedisDataConnectApi\Services\DataConnectService
         arguments:
             $authEndpoint: "https://mon-compte-particulier.enedis.fr"
-            $meteringDataEndpoint: "https://gw.prd.api.enedis.fr"
+            $dataEndpoint: "https://gw.prd.api.enedis.fr"
             $clientId: "YOUR_CLIENT_ID"
             $clientSecret: "YOUR_CLIENT_SECRET"
             $redirectUri: "YOUR_REDIRECT_URI"
