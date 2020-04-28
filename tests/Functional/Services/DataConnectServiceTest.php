@@ -20,7 +20,8 @@ final class DataConnectServiceTest extends TestCase
             "https://gw.hml.api.enedis.fr",
             "https://gw.hml.api.enedis.fr",
             $_ENV["CLIENT_ID"],
-            $_ENV["CLIENT_SECRET"]
+            $_ENV["CLIENT_SECRET"],
+            $_ENV["REDIRECT_URI"],
         );
 
         $token = $this->gettingConsent($dataConnect);

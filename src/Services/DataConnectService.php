@@ -22,18 +22,20 @@ class DataConnectService
     const GRANT_TYPE_TOKEN = 'refresh_token';
 
     private $authEndpoint;
-    private $meteringDataEndpoint;
+    private $dataEndpoint;
 
     private $clientId;
     private $clientSecret;
+    private $redirectUri;
 
-    public function __construct(string $authEndpoint, string $meteringDataEndpoint, string $clientId, string $clientSecret)
+    public function __construct(string $authEndpoint, string $dataEndpoint, string $clientId, string $clientSecret, string $redirectUri)
     {
         $this->authEndpoint = $authEndpoint;
-        $this->meteringDataEndpoint = $meteringDataEndpoint;
+        $this->dataEndpoint = $dataEndpoint;
 
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
+        $this->redirectUri = $redirectUri;
     }
 
     /**
@@ -79,7 +81,7 @@ class DataConnectService
             'grant_type' => $grantType,
             'client_id' => $this->clientId,
             'client_secret' => $this->clientSecret,
-            'redirect_uri' => "http://app.aeneria.com",
+            'redirect_uri' => $this->redirectUri,
         ];
 
         switch ($grantType) {
@@ -187,7 +189,7 @@ class DataConnectService
     {
         $response = HttpClient::create()->request(
             'GET',
-            \sprintf('%s/v4/metering_data/%s', $this->meteringDataEndpoint, $endpoint),
+            \sprintf('%s/v4/metering_data/%s', $this->dataEndpoint, $endpoint),
             [
                 'headers' => [
                     'accept' => 'application/json',

@@ -11,6 +11,7 @@
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="CLIENT_ID" value="%%CLIENT_ID%%" />
         <env name="CLIENT_SECRET" value="%%CLIENT_SECRET%%" />
+        <env name="REDIRECT_URI" value="%%REDIRECT_URI%%" />
     </php>
 
     <testsuites>

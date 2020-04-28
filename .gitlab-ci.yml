@@ -22,4 +22,5 @@ test:phpunit:
     - php composer.phar install
     - sed -i -e "s/%%CLIENT_ID%%/${ENEDIS_CLIENT_ID}/g" phpunit.xml
     - sed -i -e "s/%%CLIENT_SECRET%%/${ENEDIS_CLIENT_SECRET}/g" phpunit.xml
+    - sed -i -e "s/%%REDIRECT_URI%%/${ENEDIS_REDIRECT_URI}/g" phpunit.xml
     - php vendor/bin/phpunit --coverage-text --colors=never

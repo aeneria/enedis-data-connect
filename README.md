@@ -9,19 +9,18 @@ PHP 7.3 or higher
 
 ## Getting started
 
-First you will need a ClientID and a ClientSecret to use Enedis Data Connect API.
-Visit https://datahub-enedis.fr/data-connect, to know how to get one.
+First of all, you will need a ClientID and a ClientSecret to use Enedis Data Connect API.
+Visit https://datahub-enedis.fr/data-connect, to know how to get ones. During your
+registration you will also give a redirect URL, you will need it touse this library.
 
-Then, install the library with composer:
+Now that you have those, install the library with composer:
 
 ```sh
 composer require aeneria/enedis-data-connect
 ```
 
-Now you are ready to start using it.
-
-If you are using a framework such as Symfony, you can declare a service and use it with
-dependency injection:
+If you are using a framework such as Symfony, you can declare the library as a service and
+use it with dependency injection:
 
 ```yaml
 # config/services.yaml
@@ -34,9 +33,10 @@ services:
             $meteringDataEndpoint: "https://gw.prd.api.enedis.fr"
             $clientId: "YOUR_CLIENT_ID"
             $clientSecret: "YOUR_CLIENT_SECRET"
+            $redirectUri: "YOUR_REDIRECT_URI"
 ```
 
-Or declare it in your code this way:
+Or you can declare it in your code this way:
 
 ```php
 <?php
@@ -49,7 +49,8 @@ $dataConnect = new DataConnectService(
     "https://mon-compte-particulier.enedis.fr",
     "https://gw.prd.api.enedis.fr",
     "YOUR_CLIENT_ID",
-    "YOUR_CLIENT_SECRET"
+    "YOUR_CLIENT_SECRET",
+    "YOUR_REDIRECT_URI
 );
 
 //...
