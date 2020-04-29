@@ -2,7 +2,7 @@
 
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
-use Aeneria\EnedisDataConnectApi\MeteringData;
+use Aeneria\EnedisDataConnectApi\Model\MeteringData;
 use PHPUnit\Framework\TestCase;
 
 final class MeteringDataTest extends TestCase

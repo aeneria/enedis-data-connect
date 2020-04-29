@@ -2,7 +2,7 @@
 
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
-use Aeneria\EnedisDataConnectApi\Token;
+use Aeneria\EnedisDataConnectApi\Model\Token;
 use PHPUnit\Framework\TestCase;
 
 final class TokenTest extends TestCase

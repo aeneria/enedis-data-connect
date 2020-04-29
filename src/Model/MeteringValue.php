@@ -1,6 +1,6 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi;
+namespace Aeneria\EnedisDataConnectApi\Model;
 
 /**
  * A representation of a Result received from Data Connect API

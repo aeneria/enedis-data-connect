@@ -63,40 +63,46 @@ Then you can use the API:
 <?php
 
 // Getting consent page URL
-$dataConnect->getConsentPageUrl('P6M', $state);
+$dataConnect->getAuthorizeV1Service()->getConsentPageUrl('P6M', $state);
 
 // Getting Tokens form Code
-$token = $dataConnect->requestTokenFromCode($param['code']);
+$token = $dataConnect->getAuthorizeV1Service()->requestTokenFromCode($param['code']);
 
 // Getting Tokens from Refresh Token
-$token = $dataConnect->requestTokenFromRefreshToken($token->getRefreshToken());
+$token = $dataConnect->getAuthorizeV1Service()->requestTokenFromRefreshToken($token->getRefreshToken());
 
 // Getting consumption data
-$meteringData = $dataConnect->requestDailyConsumption(
+$meteringData = $dataConnect->getMeteringDataV4Service()->requestDailyConsumption(
+    $token->getAccessToken(),
     $token->getUsagePointsId(),
     new \DateTimeImmutable('8 days ago'),
-    new \DateTimeImmutable('yesterday'),
-    $token->getAccessToken()
+    new \DateTimeImmutable('yesterday')
 );
-$meteringData = $dataConnect->requestConsumptionLoadCurve(
+$meteringData = $dataConnect->getMeteringDataV4Service()->requestConsumptionLoadCurve(
+    $token->getAccessToken(),
     $token->getUsagePointsId(),
     new \DateTimeImmutable('2 days ago'),
-    new \DateTimeImmutable('yesterday'),
-    $token->getAccessToken()
+    new \DateTimeImmutable('yesterday')
 );
 
 // Getting production data
-$meteringData = $dataConnect->requestDailyProduction(
+$meteringData = $dataConnect->getMeteringDataV4Service()->requestDailyProduction(
+    $token->getAccessToken(),
     $token->getUsagePointsId(),
     new \DateTimeImmutable('8 days ago'),
-    new \DateTimeImmutable('yesterday'),
-    $token->getAccessToken()
+    new \DateTimeImmutable('yesterday')
 );
-$meteringData = $dataConnect->requestProductionLoadCurve(
+$meteringData = $dataConnect->getMeteringDataV4Service()->requestProductionLoadCurve(
+    $token->getAccessToken(),
     $token->getUsagePointsId(),
     new \DateTimeImmutable('2 days ago'),
-    new \DateTimeImmutable('yesterday'),
-    $token->getAccessToken()
+    new \DateTimeImmutable('yesterday')
+);
+
+// Getting customer data
+$address = $dataConnect->getCustomersService()->requestUsagePointAdresse(
+    $token->getAccessToken(),
+    $token->getUsagePointsId()
 );
 
 ```

@@ -2,9 +2,13 @@
 
 namespace Aeneria\EnedisDataConnectApi\Tests\Functional\Services;
 
-use Aeneria\EnedisDataConnectApi\MeteringData;
-use Aeneria\EnedisDataConnectApi\Services\DataConnectService;
-use Aeneria\EnedisDataConnectApi\Token;
+use Aeneria\EnedisDataConnectApi\Model\Address;
+use Aeneria\EnedisDataConnectApi\Model\MeteringData;
+use Aeneria\EnedisDataConnectApi\Service\AuthorizeV1Service;
+use Aeneria\EnedisDataConnectApi\Service\DataConnectService;
+use Aeneria\EnedisDataConnectApi\Service\MeteringDataV4Service;
+use Aeneria\EnedisDataConnectApi\Model\Token;
+use Aeneria\EnedisDataConnectApi\Service\CustomersService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -24,19 +28,24 @@ final class DataConnectServiceTest extends TestCase
             $_ENV["REDIRECT_URI"],
         );
 
-        $token = $this->gettingConsent($dataConnect);
-        $token = $this->gettingAccessToken($dataConnect, $token);
-        $this->gettingConsumptionData($dataConnect, $token);
+        // Test Authorize V1 API
+        $token = $this->gettingConsent($dataConnect->getAuthorizeV1Service());
+        $token = $this->gettingAccessToken($dataConnect->getAuthorizeV1Service(), $token);
 
-        // My client Id currently can't get production data;, it's outside my authorized scope !
-        // $this->gettingProductionData($dataConnect, $token);
+        // Test Metering Data V4 API
+        $this->gettingConsumptionData($dataConnect->getMeteringDataV4Service(), $token);
+        // My client Id currently can't get production data, it's outside my authorized scope !
+        // $this->gettingProductionData($dataConnect->getMeteringDataV4Service(), $token);
+
+        // Test Customers API
+        $this->gettingCustomerData($dataConnect->getCustomersService(), $token);
     }
 
-    private function gettingConsent(DataConnectService $dataConnect): Token
+    private function gettingConsent(AuthorizeV1Service $service): Token
     {
         $response = HttpClient::create()->request(
             'GET',
-            $dataConnect->getConsentPageUrl('P6M', $state = \md5(\uniqid(\rand(), true)) . '0')
+            $service->getConsentPageUrl('P6M', $state = \md5(\uniqid(\rand(), true)) . '0')
         );
 
         // Parsing response to find redirect URL in it
@@ -50,7 +59,7 @@ final class DataConnectServiceTest extends TestCase
         self::assertArrayHasKey('code', $param);
         self::assertArrayHasKey('usage_point_id', $param);
 
-        $token = $dataConnect->requestTokenFromCode($param['code']);
+        $token = $service->requestTokenFromCode($param['code']);
 
         self::assertInstanceOf(Token::class, $token);
         self::assertSame($param['usage_point_id'], $token->getUsagePointsId());
@@ -59,9 +68,9 @@ final class DataConnectServiceTest extends TestCase
         return $token;
     }
 
-    private function gettingAccessToken(DataConnectService $dataConnect, Token $token): Token
+    private function gettingAccessToken(AuthorizeV1Service $service, Token $token): Token
     {
-        $token = $dataConnect->requestTokenFromRefreshToken($token->getRefreshToken());
+        $token = $service->requestTokenFromRefreshToken($token->getRefreshToken());
 
         self::assertInstanceOf(Token::class, $token);
         self::assertNotNull($token->getRefreshToken());
@@ -70,13 +79,13 @@ final class DataConnectServiceTest extends TestCase
         return $token;
     }
 
-    private function gettingConsumptionData(DataConnectService $dataConnect, Token $token): void
+    private function gettingConsumptionData(MeteringDataV4Service $service, Token $token): void
     {
-        $meteringData = $dataConnect->requestDailyConsumption(
+        $meteringData = $service->requestDailyConsumption(
+            $token->getAccessToken(),
             $token->getUsagePointsId(),
             new \DateTimeImmutable('8 days ago'),
-            new \DateTimeImmutable('yesterday'),
-            $token->getAccessToken()
+            new \DateTimeImmutable('yesterday')
         );
 
         self::assertInstanceOf(MeteringData::class, $meteringData);
@@ -89,11 +98,11 @@ final class DataConnectServiceTest extends TestCase
         self::assertNotNull($meteringValue->getValue());
         self::assertInstanceOf(\DateTimeInterface::class, $meteringValue->getDate());
 
-        $meteringData = $dataConnect->requestConsumptionLoadCurve(
+        $meteringData = $service->requestConsumptionLoadCurve(
+            $token->getAccessToken(),
             $token->getUsagePointsId(),
             new \DateTimeImmutable('2 days ago'),
-            new \DateTimeImmutable('yesterday'),
-            $token->getAccessToken()
+            new \DateTimeImmutable('yesterday')
         );
 
         self::assertInstanceOf(MeteringData::class, $meteringData);
@@ -107,13 +116,13 @@ final class DataConnectServiceTest extends TestCase
         self::assertInstanceOf(\DateTimeInterface::class, $meteringValue->getDate());
     }
 
-    private function gettingProductionData(DataConnectService $dataConnect, Token $token): void
+    private function gettingProductionData(MeteringDataV4Service $service, Token $token): void
     {
-        $meteringData = $dataConnect->requestDailyProduction(
+        $meteringData = $service->requestDailyProduction(
+            $token->getAccessToken(),
             $token->getUsagePointsId(),
             new \DateTimeImmutable('8 days ago'),
-            new \DateTimeImmutable('yesterday'),
-            $token->getAccessToken()
+            new \DateTimeImmutable('yesterday')
         );
 
         self::assertInstanceOf(MeteringData::class, $meteringData);
@@ -126,11 +135,11 @@ final class DataConnectServiceTest extends TestCase
         self::assertNotNull($meteringValue->getValue());
         self::assertInstanceOf(\DateTimeInterface::class, $meteringValue->getDate());
 
-        $meteringData = $dataConnect->requestProductionLoadCurve(
+        $meteringData = $service->requestProductionLoadCurve(
+            $token->getAccessToken(),
             $token->getUsagePointsId(),
             new \DateTimeImmutable('2 days ago'),
-            new \DateTimeImmutable('yesterday'),
-            $token->getAccessToken()
+            new \DateTimeImmutable('yesterday')
         );
 
         self::assertInstanceOf(MeteringData::class, $meteringData);
@@ -142,5 +151,16 @@ final class DataConnectServiceTest extends TestCase
         self::assertEquals($meteringValue->getIntervalLength(), new \DateInterval('PT30M'));
         self::assertNotNull($meteringValue->getValue());
         self::assertInstanceOf(\DateTimeInterface::class, $meteringValue->getDate());
+    }
+
+    private function gettingCustomerData(CustomersService $service, Token $token): void
+    {
+        $address = $service->requestUsagePointAdresse(
+            $token->getAccessToken(),
+            $token->getUsagePointsId()
+        );
+
+        self::assertInstanceOf(Address::class, $address);
+        self::assertSame($token->getUsagePointsId(), $address->getUsagePointId());
     }
 }
