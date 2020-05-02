@@ -26,8 +26,8 @@ use it with dependency injection:
 # config/services.yaml
 
 services:
-    Aeneria\EnedisDataConnectApi\Services\DataConnectService:
-        class: Aeneria\EnedisDataConnectApi\Services\DataConnectService
+    Aeneria\EnedisDataConnectApi\Service\DataConnectService:
+        class: Aeneria\EnedisDataConnectApi\Service\DataConnectService
         arguments:
             $authEndpoint: "https://mon-compte-particulier.enedis.fr"
             $dataEndpoint: "https://gw.prd.api.enedis.fr"

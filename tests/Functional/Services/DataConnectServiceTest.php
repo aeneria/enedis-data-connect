@@ -38,7 +38,7 @@ final class DataConnectServiceTest extends TestCase
         // $this->gettingProductionData($dataConnect->getMeteringDataV4Service(), $token);
 
         // Test Customers API
-        $this->gettingCustomerData($dataConnect->getCustomersService(), $token);
+        // $this->gettingCustomerData($dataConnect->getCustomersService(), $token);
     }
 
     private function gettingConsent(AuthorizeV1Service $service): Token
