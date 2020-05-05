@@ -10,7 +10,7 @@ final class AddressTest extends TestCase
     public function testHydratation()
     {
         $data = <<<JSON
-{
+[{
   "customer": {
     "customer_id": "1358019319",
     "usage_points": [
@@ -36,7 +36,7 @@ final class AddressTest extends TestCase
       }
     ]
   }
-}
+}]
 JSON;
 
         $address = Address::fromJson($data);

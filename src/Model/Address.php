@@ -84,7 +84,7 @@ class Address
 
         try {
             $data = \json_decode($jsonData);
-            $data = $data->customer;
+            $data = $data[0]->customer;
             $address->customerId = $data->customer_id;
 
             $usagePointData = $data->usage_points[0]->usage_point;

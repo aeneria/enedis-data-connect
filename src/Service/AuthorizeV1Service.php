@@ -39,7 +39,7 @@ class AuthorizeV1Service extends AbstractApiService
      *
      * @var string Durée du consentement demandé par l’application,
      * au format ISO 8601. Cette durée sera affichée au consommateur et ne peut
-     * excéder 3 ans.
+     * excéder 3 ans. (ex : P6M pour 6 mois)
      *
      * @var string Paramètre de sécurité permettant de maintenir l’état
      * entre la requête et la redirection.
