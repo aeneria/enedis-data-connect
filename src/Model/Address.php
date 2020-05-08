@@ -97,9 +97,9 @@ class Address
             $address->inseeCode = $usagePointData->usage_point_addresses->insee_code;
             $address->city = $usagePointData->usage_point_addresses->city;
             $address->country = $usagePointData->usage_point_addresses->country;
-            $address->latitude = $usagePointData->usage_point_addresses->geo_points->latitude;
-            $address->longitude = $usagePointData->usage_point_addresses->geo_points->longitude;
-            $address->altitude = $usagePointData->usage_point_addresses->geo_points->altitude;
+            $address->latitude = \floatval($usagePointData->usage_point_addresses->geo_points->latitude);
+            $address->longitude = \floatval($usagePointData->usage_point_addresses->geo_points->longitude);
+            $address->altitude = \floatval($usagePointData->usage_point_addresses->geo_points->altitude);
         } catch (\Exception $e) {
             throw new \InvalidArgumentException(\sprintf(
                 "La conversion vers l'objet Address a échoué : %s",
