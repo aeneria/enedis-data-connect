@@ -115,9 +115,23 @@ class Address
         return $this->customerId;
     }
 
+    public function setCustomerId(string $customerId): self
+    {
+        $this->customerId = $customerId;
+
+        return $this;
+    }
+
     public function getUsagePointId(): ?string
     {
         return $this->usagePointId;
+    }
+
+    public function setUsagePointId(string $usagePointId): self
+    {
+        $this->usagePointId = $usagePointId;
+
+        return $this;
     }
 
     public function getUsagePointStatus(): ?string
@@ -125,9 +139,23 @@ class Address
         return $this->usagePointStatus;
     }
 
+    public function setUsagePointStatus(string $usagePointStatus): self
+    {
+        $this->usagePointStatus = $usagePointStatus;
+
+        return $this;
+    }
+
     public function getMeterType(): ?string
     {
         return $this->meterType;
+    }
+
+    public function setMeterType(string $meterType): self
+    {
+        $this->meterType = $meterType;
+
+        return $this;
     }
 
     public function getStreet(): ?string
@@ -135,9 +163,23 @@ class Address
         return $this->street;
     }
 
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
     public function getLocality(): ?string
     {
         return $this->locality;
+    }
+
+    public function setLocality(string $locality): self
+    {
+        $this->locality = $locality;
+
+        return $this;
     }
 
     public function getPostalCode(): ?string
@@ -145,9 +187,23 @@ class Address
         return $this->postalCode;
     }
 
+    public function setPostalCode(string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
     public function getInseeCode(): ?string
     {
         return $this->inseeCode;
+    }
+
+    public function setInseeCode(string $inseeCode): self
+    {
+        $this->inseeCode = $inseeCode;
+
+        return $this;
     }
 
     public function getCity(): ?string
@@ -155,9 +211,23 @@ class Address
         return $this->city;
     }
 
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
     public function getCountry(): ?string
     {
         return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
     }
 
     public function getLatitude(): ?float
@@ -165,13 +235,34 @@ class Address
         return $this->latitude;
     }
 
+    public function setLatitude(float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
     public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
     public function getAltitude(): ?float
     {
         return $this->altitude;
+    }
+
+    public function setAltitude(float $altitude): self
+    {
+            $this->altitude = $altitude;
+
+            return $this;
     }
 }

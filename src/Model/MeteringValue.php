@@ -46,13 +46,34 @@ class MeteringValue
         return $this->value;
     }
 
+    public function setValue(?float $value): self
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
     public function getIntervalLength(): ?\DateInterval
     {
         return $this->intervalLength;
     }
 
+    public function setIntervalLength(?\DateInterval $intervalLength): self
+    {
+        $this->intervalLength = $intervalLength;
+
+        return $this;
+    }
+
     public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
+    }
+
+    public function setDate(?\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
 }

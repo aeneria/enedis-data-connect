@@ -70,9 +70,23 @@ class Token
         return $this->accessToken;
     }
 
+    public function setAccessToken(?string $accessToken): self
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
     public function getTokenType(): ?string
     {
         return $this->tokenType;
+    }
+
+    public function setTokenType(?string $tokenType): self
+    {
+        $this->tokenType = $tokenType;
+
+        return $this;
     }
 
     public function getScope(): ?string
@@ -80,9 +94,23 @@ class Token
         return $this->scope;
     }
 
+    public function setScope(?string $scope): self
+    {
+        $this->scope = $scope;
+
+        return $this;
+    }
+
     public function getAccessTokenIssuedAt(): ?\DateTimeImmutable
     {
         return $this->accessTokenIssuedAt;
+    }
+
+    public function setAccessTokenIssuedAt(?\DateTimeImmutable $accessTokenIssuedAt): self
+    {
+        $this->accessTokenIssuedAt = $accessTokenIssuedAt;
+
+        return $this;
     }
 
     public function getRefreshToken(): ?string
@@ -90,13 +118,34 @@ class Token
         return $this->refreshToken;
     }
 
+    public function setRefreshToken(?string $refreshToken): self
+    {
+        $this->refreshToken = $refreshToken;
+
+        return $this;
+    }
+
     public function getRefreshTokenIssuedAt(): ?\DateTimeImmutable
     {
         return $this->refreshTokenIssuedAt;
     }
 
+    public function setRefreshTokenIssuedAt(?\DateTimeImmutable $refreshTokenIssuedAt): self
+    {
+        $this->refreshTokenIssuedAt = $refreshTokenIssuedAt;
+
+        return $this;
+    }
+
     public function getUsagePointsId(): ?string
     {
         return $this->usagePointsId;
+    }
+
+    public function setUsagePointsId(?string $usagePointsId): self
+    {
+        $this->usagePointsId = $usagePointsId;
+
+        return $this;
     }
 }
