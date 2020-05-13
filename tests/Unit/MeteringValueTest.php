@@ -10,12 +10,12 @@ final class MeteringValueTest extends TestCase
     public function testHydratation()
     {
         $data = <<<JSON
-{
-  "value": "540",
-  "date": "2019-05-06",
-  "interval_length": "P1D"
-}
-JSON;
+        {
+          "value": "540",
+          "date": "2019-05-06",
+          "interval_length": "P1D"
+        }
+        JSON;
 
         $meteringValue = MeteringValue::fromStdClass(\json_decode($data));
 

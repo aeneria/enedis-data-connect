@@ -10,27 +10,27 @@ final class MeteringDataTest extends TestCase
     public function testHydratation()
     {
         $data = <<<JSON
-{
-  "meter_reading": {
-    "usage_point_id": "16401220101758",
-    "start": "2019-05-06",
-    "end": "2019-05-12",
-    "quality": "BRUT",
-    "reading_type": {
-      "measurement_kind": "energy",
-      "measuring_period": "P1D",
-      "unit": "Wh",
-      "aggregate": "sum"
-    },
-    "interval_reading": [
-      {
-        "value": "540",
-        "date": "2019-05-06"
-      }
-    ]
-  }
-}
-JSON;
+        {
+          "meter_reading": {
+            "usage_point_id": "16401220101758",
+            "start": "2019-05-06",
+            "end": "2019-05-12",
+            "quality": "BRUT",
+            "reading_type": {
+              "measurement_kind": "energy",
+              "measuring_period": "P1D",
+              "unit": "Wh",
+              "aggregate": "sum"
+            },
+            "interval_reading": [
+              {
+                "value": "540",
+                "date": "2019-05-06"
+              }
+            ]
+          }
+        }
+        JSON;
 
         $meteringData = MeteringData::fromJson($data, MeteringData::TYPE_DAILY_CONSUMPTION);
 

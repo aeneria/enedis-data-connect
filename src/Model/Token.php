@@ -32,6 +32,9 @@ class Token
     /** @var \DateTimeImmutable */
     private $accessTokenIssuedAt;
 
+    /** @var \DateTimeImmutable */
+    private $accessTokenExpirationDate;
+
     /** @var string */
     private $refreshToken;
 
@@ -50,6 +53,8 @@ class Token
 
             $token->accessToken = $data->access_token;
             $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->issued_at / 1000));
+            $expirationDate = (new \DateTime())->add(new \DateInterval('PT' . $data->expires_in .'S'));
+            $token->accessTokenExpirationDate = \DateTimeImmutable::createFromMutable($expirationDate);
             $token->refreshToken = $data->refresh_token;
             $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at / 1000));
             $token->usagePointsId = $data->usage_points_id;
@@ -111,6 +116,23 @@ class Token
         $this->accessTokenIssuedAt = $accessTokenIssuedAt;
 
         return $this;
+    }
+
+    public function getAccessTokenExpirationDate(): ?\DateTimeImmutable
+    {
+        return $this->accessTokenExpirationDate;
+    }
+
+    public function setAccessTokenExpirationDate(?\DateTimeImmutable $accessTokenExpirationDate): self
+    {
+        $this->accessTokenExpirationDate = $accessTokenExpirationDate;
+
+        return $this;
+    }
+
+    public function isAccessTokenStillValid(): bool
+    {
+        return $this->accessTokenExpirationDate && ($this->accessTokenExpirationDate > new \DateTimeImmutable());
     }
 
     public function getRefreshToken(): ?string
