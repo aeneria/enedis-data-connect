@@ -55,5 +55,6 @@ final class AddressTest extends TestCase
         self::assertSame(43.687253, $address->getLatitude());
         self::assertSame(-0.087957, $address->getLongitude());
         self::assertSame(148.0, $address->getAltitude());
+        self::assertSame("2 bis rue du capitaine Flam, lieudit Tourtouze, 32400, Maulichères, France", $address . "");
     }
 }

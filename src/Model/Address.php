@@ -265,4 +265,31 @@ class Address
 
             return $this;
     }
+
+    public function __toString()
+    {
+        $parts = [];
+
+        if ($this->street) {
+            $parts[] = $this->street;
+        }
+
+        if ($this->locality) {
+            $parts[] = $this->locality;
+        }
+
+        if ($this->postalCode) {
+            $parts[] = $this->postalCode;
+        }
+
+        if ($this->city) {
+            $parts[] = $this->city;
+        }
+
+        if ($this->country) {
+            $parts[] = $this->country;
+        }
+
+        return \implode(", ", $parts);
+    }
 }
