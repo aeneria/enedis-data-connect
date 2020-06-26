@@ -2,12 +2,7 @@
 
 namespace Aeneria\EnedisDataConnectApi\Service;
 
-/**
- * Meta-Service to access all API services
- *
- * @see https://datahub-enedis.fr/data-connect/documentation/
- */
-class DataConnectService implements DataConnectServiceInterface
+class MockDataConnectService implements DataConnectServiceInterface
 {
     /** @var AuthorizeV1Service */
     private $authorizeV1Service;
@@ -16,11 +11,11 @@ class DataConnectService implements DataConnectServiceInterface
     /** @var CustomersService */
     private $customersService;
 
-    public function __construct(string $authEndpoint, string $dataEndpoint, string $clientId, string $clientSecret, string $redirectUri)
+    public function __construct()
     {
-        $this->authorizeV1Service = new AuthorizeV1Service($authEndpoint, $clientId, $clientSecret, $redirectUri);
-        $this->meteringDataV4Service = new MeteringDataV4Service($dataEndpoint);
-        $this->customersService = new CustomersService($dataEndpoint);
+        $this->authorizeV1Service = new MockAuthorizeV1Service();
+        $this->meteringDataV4Service = new MockMeteringDataV4Service();
+        $this->customersService = new MockCustomersService();
     }
 
     public function getAuthorizeV1Service(): AuthorizeV1ServiceInterface

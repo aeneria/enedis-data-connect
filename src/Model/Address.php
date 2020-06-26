@@ -88,7 +88,7 @@ class Address
             $address->customerId = $data->customer_id;
 
             $usagePointData = $data->usage_points[0]->usage_point;
-            $address->usagePointId = $usagePointData->usage_point_id;
+            $address->usagePointId = \trim($usagePointData->usage_point_id);
             $address->usagePointStatus = $usagePointData->usage_point_status;
             $address->meterType = $usagePointData->meter_type;
             $address->street = $usagePointData->usage_point_addresses->street;

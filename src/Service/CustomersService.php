@@ -10,7 +10,7 @@ use Symfony\Component\HttpClient\HttpClient;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/customers/
  */
-class CustomersService extends AbstractApiService
+class CustomersService extends AbstractApiService implements CustomersServiceInterface
 {
     private $dataEndpoint;
 
@@ -19,7 +19,10 @@ class CustomersService extends AbstractApiService
         $this->dataEndpoint = $dataEndpoint;
     }
 
-    public function requestUsagePointAdresse(string $accessToken, string $usagePointId)
+    /**
+     * @inheritdoc
+     */
+    public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address
     {
         $response = $this->requestCustomersData('usage_points/addresses', $accessToken, $usagePointId);
 

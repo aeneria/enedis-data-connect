@@ -57,7 +57,7 @@ class Token
             $token->accessTokenExpirationDate = \DateTimeImmutable::createFromMutable($expirationDate);
             $token->refreshToken = $data->refresh_token;
             $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at / 1000));
-            $token->usagePointsId = $data->usage_points_id;
+            $token->usagePointsId = \trim($data->usage_points_id);
             $token->tokenType = $data->token_type;
             $token->scope = $data->scope;
         } catch (\Exception $e) {
