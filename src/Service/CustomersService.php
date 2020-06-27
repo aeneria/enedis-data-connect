@@ -3,23 +3,31 @@
 namespace Aeneria\EnedisDataConnectApi\Service;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Implements Customers API
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/customers/
  */
-class CustomersService extends AbstractApiService
+class CustomersService extends AbstractApiService implements CustomersServiceInterface
 {
+    /** @var HttpClientInterface */
+    private $httpClient;
+
+    /** @var string */
     private $dataEndpoint;
 
-    public function __construct(string $dataEndpoint)
+    public function __construct(HttpClientInterface $httpClient, string $dataEndpoint)
     {
+        $this->httpClient = $httpClient;
         $this->dataEndpoint = $dataEndpoint;
     }
 
-    public function requestUsagePointAdresse(string $accessToken, string $usagePointId)
+    /**
+     * {@inheritdoc}
+     */
+    public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address
     {
         $response = $this->requestCustomersData('usage_points/addresses', $accessToken, $usagePointId);
 
@@ -28,7 +36,7 @@ class CustomersService extends AbstractApiService
 
     private function requestCustomersData(string $endpoint, string $accessToken, string $usagePointId): string
     {
-        $response = HttpClient::create()->request(
+        $response = $this->httpClient->request(
             'GET',
             \sprintf('%s/v3/customers/%s', $this->dataEndpoint, $endpoint),
             [

@@ -3,28 +3,28 @@
 namespace Aeneria\EnedisDataConnectApi\Service;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Implements Metering Data V4
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/metering-data-v4/
  */
-class MeteringDataV4Service extends AbstractApiService
+class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4ServiceInterface
 {
+    /** @var HttpClientInterface */
+    private $httpClient;
     /** @var string */
     private $dataEndpoint;
 
-    public function __construct(string $dataEndpoint)
+    public function __construct(HttpClientInterface $httpClient, string $dataEndpoint)
     {
+        $this->httpClient = $httpClient;
         $this->dataEndpoint = $dataEndpoint;
     }
 
     /**
-     * Get consumption load curve between 2 dates for a usage point.
-     *
-     * Récupérer la puissance moyenne consommée quotidiennement,
-     * sur l'intervalle de mesure du compteur (par défaut 30 min)
+     * {@inheritdoc}
      */
     public function requestConsumptionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -39,10 +39,7 @@ class MeteringDataV4Service extends AbstractApiService
     }
 
     /**
-     * Get production load curve between 2 dates for a usage point.
-     *
-     * Récupérer la puissance moyenne produite quotidiennement,
-     * sur l'intervalle de mesure du compteur (par défaut 30 min)
+     * {@inheritdoc}
      */
     public function requestProductionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -57,9 +54,7 @@ class MeteringDataV4Service extends AbstractApiService
     }
 
     /**
-     * Get daily consumption between 2 dates for a usage point.
-     *
-     * Récupérer la consommation quotidienne
+     * {@inheritdoc}
      */
     public function requestDailyConsumption(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -74,9 +69,7 @@ class MeteringDataV4Service extends AbstractApiService
     }
 
     /**
-     * Get daily production between 2 dates for a usage point.
-     *
-     * Récupérer la production quotidienne
+     * {@inheritdoc}
      */
     public function requestDailyProduction(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -95,7 +88,7 @@ class MeteringDataV4Service extends AbstractApiService
      */
     private function requestMeteringData(string $endpoint, string $dataType, string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
-        $response = HttpClient::create()->request(
+        $response = $this->httpClient->request(
             'GET',
             \sprintf('%s/v4/metering_data/%s', $this->dataEndpoint, $endpoint),
             [

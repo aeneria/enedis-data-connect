@@ -3,17 +3,20 @@
 namespace Aeneria\EnedisDataConnectApi\Service;
 
 use Aeneria\EnedisDataConnectApi\Model\Token;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Implements AuthorizeV1 API
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/authorize-v1/
  */
-class AuthorizeV1Service extends AbstractApiService
+class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1ServiceInterface
 {
     const GRANT_TYPE_CODE = 'authorization_code';
     const GRANT_TYPE_TOKEN = 'refresh_token';
+
+    /** @var HttpClientInterface */
+    private $httpClient;
 
     /** @var string */
     private $authEndpoint;
@@ -25,8 +28,15 @@ class AuthorizeV1Service extends AbstractApiService
     /** @var string */
     private $redirectUri;
 
-    public function __construct(string $authEndpoint, string $clientId, string $clientSecret, string $redirectUri)
-    {
+    public function __construct(
+        HttpClientInterface $httpClient,
+        string $authEndpoint,
+        string $clientId,
+        string $clientSecret,
+        string $redirectUri
+    ) {
+        $this->httpClient = $httpClient;
+
         $this->authEndpoint = $authEndpoint;
 
         $this->clientId = $clientId;
@@ -35,14 +45,7 @@ class AuthorizeV1Service extends AbstractApiService
     }
 
     /**
-     * Get a URL to DataConnect consent page.
-     *
-     * @var string Durée du consentement demandé par l’application,
-     * au format ISO 8601. Cette durée sera affichée au consommateur et ne peut
-     * excéder 3 ans. (ex : P6M pour 6 mois)
-     *
-     * @var string Paramètre de sécurité permettant de maintenir l’état
-     * entre la requête et la redirection.
+     * {@inheritdoc}
      */
     public function getConsentPageUrl(string $duration, string $state): string
     {
@@ -56,7 +59,7 @@ class AuthorizeV1Service extends AbstractApiService
     }
 
     /**
-     * Get DataConnectToken from a grant code.
+     * {@inheritdoc}
      */
     public function requestTokenFromCode(string $code): Token
     {
@@ -64,7 +67,7 @@ class AuthorizeV1Service extends AbstractApiService
     }
 
     /**
-     * Get DataConnectToken from a refreshToken.
+     * {@inheritdoc}
      */
     public function requestTokenFromRefreshToken(string $refreshToken): Token
     {
@@ -95,7 +98,7 @@ class AuthorizeV1Service extends AbstractApiService
                 ));
         }
 
-        $response = HttpClient::create()->request(
+        $response = $this->httpClient->request(
             'POST',
             \sprintf('%s/v1/oauth2/token', $this->authEndpoint),
             [

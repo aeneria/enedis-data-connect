@@ -53,11 +53,11 @@ class Token
 
             $token->accessToken = $data->access_token;
             $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->issued_at / 1000));
-            $expirationDate = (new \DateTime())->add(new \DateInterval('PT' . $data->expires_in .'S'));
+            $expirationDate = (new \DateTime())->add(new \DateInterval('PT' . $data->expires_in . 'S'));
             $token->accessTokenExpirationDate = \DateTimeImmutable::createFromMutable($expirationDate);
             $token->refreshToken = $data->refresh_token;
             $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at / 1000));
-            $token->usagePointsId = $data->usage_points_id;
+            $token->usagePointsId = \trim($data->usage_points_id);
             $token->tokenType = $data->token_type;
             $token->scope = $data->scope;
         } catch (\Exception $e) {
@@ -75,23 +75,9 @@ class Token
         return $this->accessToken;
     }
 
-    public function setAccessToken(?string $accessToken): self
-    {
-        $this->accessToken = $accessToken;
-
-        return $this;
-    }
-
     public function getTokenType(): ?string
     {
         return $this->tokenType;
-    }
-
-    public function setTokenType(?string $tokenType): self
-    {
-        $this->tokenType = $tokenType;
-
-        return $this;
     }
 
     public function getScope(): ?string
@@ -99,35 +85,14 @@ class Token
         return $this->scope;
     }
 
-    public function setScope(?string $scope): self
-    {
-        $this->scope = $scope;
-
-        return $this;
-    }
-
     public function getAccessTokenIssuedAt(): ?\DateTimeImmutable
     {
         return $this->accessTokenIssuedAt;
     }
 
-    public function setAccessTokenIssuedAt(?\DateTimeImmutable $accessTokenIssuedAt): self
-    {
-        $this->accessTokenIssuedAt = $accessTokenIssuedAt;
-
-        return $this;
-    }
-
     public function getAccessTokenExpirationDate(): ?\DateTimeImmutable
     {
         return $this->accessTokenExpirationDate;
-    }
-
-    public function setAccessTokenExpirationDate(?\DateTimeImmutable $accessTokenExpirationDate): self
-    {
-        $this->accessTokenExpirationDate = $accessTokenExpirationDate;
-
-        return $this;
     }
 
     public function isAccessTokenStillValid(): bool
@@ -140,34 +105,13 @@ class Token
         return $this->refreshToken;
     }
 
-    public function setRefreshToken(?string $refreshToken): self
-    {
-        $this->refreshToken = $refreshToken;
-
-        return $this;
-    }
-
     public function getRefreshTokenIssuedAt(): ?\DateTimeImmutable
     {
         return $this->refreshTokenIssuedAt;
     }
 
-    public function setRefreshTokenIssuedAt(?\DateTimeImmutable $refreshTokenIssuedAt): self
-    {
-        $this->refreshTokenIssuedAt = $refreshTokenIssuedAt;
-
-        return $this;
-    }
-
     public function getUsagePointsId(): ?string
     {
         return $this->usagePointsId;
-    }
-
-    public function setUsagePointsId(?string $usagePointsId): self
-    {
-        $this->usagePointsId = $usagePointsId;
-
-        return $this;
     }
 }
