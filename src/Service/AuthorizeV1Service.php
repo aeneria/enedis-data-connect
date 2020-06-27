@@ -3,7 +3,7 @@
 namespace Aeneria\EnedisDataConnectApi\Service;
 
 use Aeneria\EnedisDataConnectApi\Model\Token;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Implements AuthorizeV1 API
@@ -15,6 +15,9 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
     const GRANT_TYPE_CODE = 'authorization_code';
     const GRANT_TYPE_TOKEN = 'refresh_token';
 
+    /** @var HttpClientInterface */
+    private $httpClient;
+
     /** @var string */
     private $authEndpoint;
 
@@ -25,8 +28,15 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
     /** @var string */
     private $redirectUri;
 
-    public function __construct(string $authEndpoint, string $clientId, string $clientSecret, string $redirectUri)
-    {
+    public function __construct(
+        HttpClientInterface $httpClient,
+        string $authEndpoint,
+        string $clientId,
+        string $clientSecret,
+        string $redirectUri
+    ) {
+        $this->httpClient = $httpClient;
+
         $this->authEndpoint = $authEndpoint;
 
         $this->clientId = $clientId;
@@ -35,7 +45,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getConsentPageUrl(string $duration, string $state): string
     {
@@ -49,7 +59,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestTokenFromCode(string $code): Token
     {
@@ -57,7 +67,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestTokenFromRefreshToken(string $refreshToken): Token
     {
@@ -88,7 +98,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
                 ));
         }
 
-        $response = HttpClient::create()->request(
+        $response = $this->httpClient->request(
             'POST',
             \sprintf('%s/v1/oauth2/token', $this->authEndpoint),
             [

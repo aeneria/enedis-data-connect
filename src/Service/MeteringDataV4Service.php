@@ -3,7 +3,7 @@
 namespace Aeneria\EnedisDataConnectApi\Service;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Implements Metering Data V4
@@ -12,16 +12,19 @@ use Symfony\Component\HttpClient\HttpClient;
  */
 class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4ServiceInterface
 {
+    /** @var HttpClientInterface */
+    private $httpClient;
     /** @var string */
     private $dataEndpoint;
 
-    public function __construct(string $dataEndpoint)
+    public function __construct(HttpClientInterface $httpClient, string $dataEndpoint)
     {
+        $this->httpClient = $httpClient;
         $this->dataEndpoint = $dataEndpoint;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestConsumptionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -36,7 +39,7 @@ class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestProductionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -51,7 +54,7 @@ class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestDailyConsumption(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -66,7 +69,7 @@ class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestDailyProduction(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -85,7 +88,7 @@ class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4
      */
     private function requestMeteringData(string $endpoint, string $dataType, string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
-        $response = HttpClient::create()->request(
+        $response = $this->httpClient->request(
             'GET',
             \sprintf('%s/v4/metering_data/%s', $this->dataEndpoint, $endpoint),
             [

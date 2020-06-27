@@ -7,7 +7,7 @@ use Aeneria\EnedisDataConnectApi\Model\Address;
 class MockCustomersService extends AbstractApiService implements CustomersServiceInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address
     {

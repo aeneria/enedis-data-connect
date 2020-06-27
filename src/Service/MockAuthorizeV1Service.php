@@ -7,7 +7,7 @@ use Aeneria\EnedisDataConnectApi\Model\Token;
 class MockAuthorizeV1Service extends AbstractApiService implements AuthorizeV1ServiceInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getConsentPageUrl(string $duration, string $state): string
     {
@@ -15,7 +15,7 @@ class MockAuthorizeV1Service extends AbstractApiService implements AuthorizeV1Se
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestTokenFromCode(string $code): Token
     {
@@ -34,7 +34,7 @@ class MockAuthorizeV1Service extends AbstractApiService implements AuthorizeV1Se
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestTokenFromRefreshToken(string $refreshToken): Token
     {

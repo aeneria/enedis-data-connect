@@ -261,9 +261,9 @@ class Address
 
     public function setAltitude(float $altitude): self
     {
-            $this->altitude = $altitude;
+        $this->altitude = $altitude;
 
-            return $this;
+        return $this;
     }
 
     public function __toString()

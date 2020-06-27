@@ -4,11 +4,11 @@ namespace Aeneria\EnedisDataConnectApi\Tests\Functional\Services;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
+use Aeneria\EnedisDataConnectApi\Model\Token;
 use Aeneria\EnedisDataConnectApi\Service\AuthorizeV1Service;
+use Aeneria\EnedisDataConnectApi\Service\CustomersService;
 use Aeneria\EnedisDataConnectApi\Service\DataConnectService;
 use Aeneria\EnedisDataConnectApi\Service\MeteringDataV4Service;
-use Aeneria\EnedisDataConnectApi\Model\Token;
-use Aeneria\EnedisDataConnectApi\Service\CustomersService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
 

@@ -7,7 +7,7 @@ use Aeneria\EnedisDataConnectApi\Model\MeteringData;
 class MockMeteringDataV4Service extends AbstractApiService implements MeteringDataV4ServiceInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestConsumptionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -33,7 +33,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestProductionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -59,7 +59,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestDailyConsumption(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
@@ -85,28 +85,28 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function requestDailyProduction(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
         $json = '{"meter_reading": {';
-            $json .= '"usage_point_id": "' . $usagePointId . '",';
-            $json .= '"start": "' . $start->format('Y-m-d') . '",';
-            $json .= '"end": "' . $start->format('Y-m-d') . '",';
-            $json .= '"quality": "BRUT",';
-            $json .= '"reading_type": {"measurement_kind": "energy","measuring_period": "P1D","unit": "Wh","aggregate": "sum"},';
-            $json .= '"interval_reading": [';
+        $json .= '"usage_point_id": "' . $usagePointId . '",';
+        $json .= '"start": "' . $start->format('Y-m-d') . '",';
+        $json .= '"end": "' . $start->format('Y-m-d') . '",';
+        $json .= '"quality": "BRUT",';
+        $json .= '"reading_type": {"measurement_kind": "energy","measuring_period": "P1D","unit": "Wh","aggregate": "sum"},';
+        $json .= '"interval_reading": [';
 
-            $currentDatetime = \DateTime::createFromImmutable($start);
-            $data = [];
-            while ($currentDatetime < $end) {
-                $data[] = '{"value": "100","date": "' . $currentDatetime->format('Y-m-d') . '"}';
-                $currentDatetime->add(new \DateInterval('P1D'));
-            }
+        $currentDatetime = \DateTime::createFromImmutable($start);
+        $data = [];
+        while ($currentDatetime < $end) {
+            $data[] = '{"value": "100","date": "' . $currentDatetime->format('Y-m-d') . '"}';
+            $currentDatetime->add(new \DateInterval('P1D'));
+        }
 
-            $json .= \implode(', ', $data);
-            $json .= ']}}';
+        $json .= \implode(', ', $data);
+        $json .= ']}}';
 
-            return MeteringData::fromJson($json, MeteringData::TYPE_DAILY_PRODUCTION);
+        return MeteringData::fromJson($json, MeteringData::TYPE_DAILY_PRODUCTION);
     }
 }

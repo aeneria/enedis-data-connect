@@ -3,7 +3,6 @@
 namespace Aeneria\EnedisDataConnectApi\Service;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
-use Symfony\Component\HttpClient\HttpClient;
 
 /**
  * Implements DataConnect Metering Data V4
