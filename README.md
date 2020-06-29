@@ -29,7 +29,7 @@ services:
     Aeneria\EnedisDataConnectApi\Service\DataConnectService:
         class: Aeneria\EnedisDataConnectApi\Service\DataConnectService
         arguments:
-            $httpClient: http_client
+            $httpClient: "@http_client"
             $authEndpoint: "https://mon-compte-particulier.enedis.fr"
             $dataEndpoint: "https://gw.prd.api.enedis.fr"
             $clientId: "YOUR_CLIENT_ID"

@@ -21,6 +21,7 @@ final class DataConnectServiceTest extends TestCase
     public function testDataConnectService()
     {
         $dataConnect = new DataConnectService(
+            HttpClient::create(),
             "https://gw.hml.api.enedis.fr",
             "https://gw.hml.api.enedis.fr",
             $_ENV["CLIENT_ID"],
