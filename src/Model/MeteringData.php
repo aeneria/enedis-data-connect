@@ -92,9 +92,23 @@ class MeteringData
         return $this->usagePointId;
     }
 
+    public function setUsagePointId(string $usagePointId): self
+    {
+        $this->usagePointId = $usagePointId;
+
+        return $this;
+    }
+
     public function getDataType(): string
     {
         return $this->dataType;
+    }
+
+    public function setDataType(string $dataType): self
+    {
+        $this->dataType = $dataType;
+
+        return $this;
     }
 
     public function getStart(): \DateTimeImmutable
@@ -102,9 +116,23 @@ class MeteringData
         return $this->start;
     }
 
+    public function setStart(\DateTimeImmutable $start): self
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
     public function getEnd(): \DateTimeImmutable
     {
         return $this->end;
+    }
+
+    public function setEnd(\DateTimeImmutable $end): self
+    {
+        $this->end = $end;
+
+        return $this;
     }
 
     public function getUnit(): string
@@ -112,8 +140,22 @@ class MeteringData
         return $this->unit;
     }
 
+    public function setUnit(string $unit): self
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
     public function getValues(): array
     {
         return $this->values;
+    }
+
+    public function setValues(array $values): self
+    {
+        $this->values = $values;
+
+        return $this;
     }
 }
