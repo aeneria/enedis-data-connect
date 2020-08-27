@@ -90,7 +90,7 @@ class Address
             $usagePointData = $data->usage_points[0]->usage_point ?? null;
             $address->usagePointId = \trim($usagePointData->usage_point_id ?? null);
             $address->usagePointStatus = $usagePointData->usage_point_status ?? null;
-            $address->meterType = $usagePointData->meter_type  ?? null;
+            $address->meterType = $usagePointData->meter_type ?? null;
             if (isset($usagePointData->usage_point_addresses) && ($usagePointAddresses = $usagePointData->usage_point_addresses)) {
                 $address->street = $usagePointAddresses->street ?? null;
                 $address->locality = $usagePointAddresses->locality ?? null;
