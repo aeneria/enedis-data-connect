@@ -84,9 +84,7 @@ class Address
 
         try {
             $data = \json_decode($jsonData);
-
-            // $data can easer be an object or an array of object
-            $data = \is_array($data) ? $data[0]->customer : $data->customer;
+            $data = $data->customer;
             $address->customerId = $data->customer_id;
 
             $usagePointData = $data->usage_points[0]->usage_point ?? null;

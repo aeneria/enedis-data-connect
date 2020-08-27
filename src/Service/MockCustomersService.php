@@ -12,7 +12,7 @@ class MockCustomersService extends AbstractApiService implements CustomersServic
     public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address
     {
         $json = <<<JSON
-        [{
+        {
           "customer": {
             "customer_id": "1358019319",
             "usage_points": [
@@ -43,7 +43,7 @@ class MockCustomersService extends AbstractApiService implements CustomersServic
               }
             ]
           }
-        }]
+        }
         JSON;
 
         return Address::fromJson($json);
