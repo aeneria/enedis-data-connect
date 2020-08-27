@@ -153,7 +153,7 @@ class Address
         return $this->meterType;
     }
 
-    public function setMeterType(string $meterType): self
+    public function setMeterType(?string $meterType): self
     {
         $this->meterType = $meterType;
 
@@ -165,7 +165,7 @@ class Address
         return $this->street;
     }
 
-    public function setStreet(string $street): self
+    public function setStreet(?string $street): self
     {
         $this->street = $street;
 
@@ -177,7 +177,7 @@ class Address
         return $this->locality;
     }
 
-    public function setLocality(string $locality): self
+    public function setLocality(?string $locality): self
     {
         $this->locality = $locality;
 
@@ -189,7 +189,7 @@ class Address
         return $this->postalCode;
     }
 
-    public function setPostalCode(string $postalCode): self
+    public function setPostalCode(?string $postalCode): self
     {
         $this->postalCode = $postalCode;
 
@@ -201,7 +201,7 @@ class Address
         return $this->inseeCode;
     }
 
-    public function setInseeCode(string $inseeCode): self
+    public function setInseeCode(?string $inseeCode): self
     {
         $this->inseeCode = $inseeCode;
 
@@ -213,7 +213,7 @@ class Address
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    public function setCity(?string $city): self
     {
         $this->city = $city;
 
@@ -225,7 +225,7 @@ class Address
         return $this->country;
     }
 
-    public function setCountry(string $country): self
+    public function setCountry(?string $country): self
     {
         $this->country = $country;
 
@@ -237,7 +237,7 @@ class Address
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude): self
+    public function setLatitude(?float $latitude): self
     {
         $this->latitude = $latitude;
 
@@ -249,7 +249,7 @@ class Address
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude): self
+    public function setLongitude(?float $longitude): self
     {
         $this->longitude = $longitude;
 
@@ -261,7 +261,7 @@ class Address
         return $this->altitude;
     }
 
-    public function setAltitude(float $altitude): self
+    public function setAltitude(?float $altitude): self
     {
         $this->altitude = $altitude;
 
