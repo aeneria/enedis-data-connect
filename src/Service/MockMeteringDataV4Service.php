@@ -22,7 +22,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
         $currentDatetime = \DateTime::createFromImmutable($start);
         $data = [];
         while ($currentDatetime < $end) {
-            $data[] = '{"value": "100", "date": "' . $currentDatetime->format('Y-m-d h:i:s') . '", "interval_length": "PT30M", "measure_type": "B"}';
+            $data[] = '{"value": "100", "date": "' . $currentDatetime->format('Y-m-d H:i:s') . '", "interval_length": "PT30M", "measure_type": "B"}';
             $currentDatetime->add(new \DateInterval('PT30M'));
         }
         $json .= \implode(', ', $data);
@@ -48,7 +48,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
         $currentDatetime = \DateTime::createFromImmutable($start);
         $data = [];
         while ($currentDatetime < $end) {
-            $data[] = '{"value": "100","date": "' . $currentDatetime->format('Y-m-d h:i:s') . '","interval_length": "PT30M","measure_type": "B"}';
+            $data[] = '{"value": "100","date": "' . $currentDatetime->format('Y-m-d H:i:s') . '","interval_length": "PT30M","measure_type": "B"}';
             $currentDatetime->add(new \DateInterval('PT30M'));
         }
 
