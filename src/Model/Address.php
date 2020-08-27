@@ -84,22 +84,26 @@ class Address
 
         try {
             $data = \json_decode($jsonData);
-            $data = $data[0]->customer;
+
+            // $data can easer be an object or an array of object
+            $data = \is_array($data) ? $data[0]->customer : $data->customer;
             $address->customerId = $data->customer_id;
 
-            $usagePointData = $data->usage_points[0]->usage_point;
-            $address->usagePointId = \trim($usagePointData->usage_point_id);
-            $address->usagePointStatus = $usagePointData->usage_point_status;
-            $address->meterType = $usagePointData->meter_type;
-            $address->street = $usagePointData->usage_point_addresses->street;
-            $address->locality = $usagePointData->usage_point_addresses->locality;
-            $address->postalCode = $usagePointData->usage_point_addresses->postal_code;
-            $address->inseeCode = $usagePointData->usage_point_addresses->insee_code;
-            $address->city = $usagePointData->usage_point_addresses->city;
-            $address->country = $usagePointData->usage_point_addresses->country;
-            $address->latitude = \floatval($usagePointData->usage_point_addresses->geo_points->latitude);
-            $address->longitude = \floatval($usagePointData->usage_point_addresses->geo_points->longitude);
-            $address->altitude = \floatval($usagePointData->usage_point_addresses->geo_points->altitude);
+            $usagePointData = $data->usage_points[0]->usage_point ?? null;
+            $address->usagePointId = \trim($usagePointData->usage_point_id ?? null);
+            $address->usagePointStatus = $usagePointData->usage_point_status ?? null;
+            $address->meterType = $usagePointData->meter_type  ?? null;
+            if (isset($usagePointData->usage_point_addresses) && ($usagePointAddresses = $usagePointData->usage_point_addresses)) {
+                $address->street = $usagePointAddresses->street ?? null;
+                $address->locality = $usagePointAddresses->locality ?? null;
+                $address->postalCode = $usagePointAddresses->postal_code ?? null;
+                $address->inseeCode = $usagePointAddresses->insee_code ?? null;
+                $address->city = $usagePointAddresses->city ?? null;
+                $address->country = $usagePointAddresses->country ?? null;
+                $address->latitude = \floatval($usagePointAddresses->geo_points->latitude ?? null);
+                $address->longitude = \floatval($usagePointAddresses->geo_points->longitude ?? null);
+                $address->altitude = \floatval($usagePointAddresses->geo_points->altitude ?? null);
+            }
         } catch (\Exception $e) {
             throw new \InvalidArgumentException(\sprintf(
                 "La conversion vers l'objet Address a échoué : %s",
