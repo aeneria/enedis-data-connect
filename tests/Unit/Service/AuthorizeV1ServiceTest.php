@@ -20,6 +20,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             HttpClient::create(),
             'endpoint',
+            "endpoint",
             'clientId',
             'clientSecrect',
             'redirectUri'
@@ -53,6 +54,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             $httpClient,
             'http://endpoint.fr',
+            "https://gw.hml.api.enedis.fr",
             'clientId',
             'clientSecrect',
             'redirectUri'
@@ -92,6 +94,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             $httpClient,
             'http://endpoint.fr',
+            "https://gw.hml.api.enedis.fr",
             'clientId',
             'clientSecrect',
             'redirectUri'
@@ -117,6 +120,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             $httpClient,
             'http://endpoint.fr',
+            "https://gw.hml.api.enedis.fr",
             'clientId',
             'clientSecrect',
             'redirectUri'
@@ -136,6 +140,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             $httpClient,
             'http://endpoint.fr',
+            "https://gw.hml.api.enedis.fr",
             'clientId',
             'clientSecrect',
             'redirectUri'
@@ -155,6 +160,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             $httpClient,
             'http://endpoint.fr',
+            "https://gw.hml.api.enedis.fr",
             'clientId',
             'clientSecrect',
             'redirectUri'
@@ -174,6 +180,7 @@ final class AuthorizeV1ServiceTest extends TestCase
         $service = new AuthorizeV1Service(
             $httpClient,
             'http://endpoint.fr',
+            "https://gw.hml.api.enedis.fr",
             'clientId',
             'clientSecrect',
             'redirectUri'
