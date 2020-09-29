@@ -20,6 +20,8 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
 
     /** @var string */
     private $authEndpoint;
+    /** @var string */
+    private $tokenEndpoint;
 
     /** @var string */
     private $clientId;
@@ -31,6 +33,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
     public function __construct(
         HttpClientInterface $httpClient,
         string $authEndpoint,
+        string $tokenEndpoint,
         string $clientId,
         string $clientSecret,
         string $redirectUri
@@ -38,6 +41,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
         $this->httpClient = $httpClient;
 
         $this->authEndpoint = $authEndpoint;
+        $this->tokenEndpoint = $tokenEndpoint;
 
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -100,7 +104,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
 
         $response = $this->httpClient->request(
             'POST',
-            \sprintf('%s/v1/oauth2/token', $this->authEndpoint),
+            \sprintf('%s/v1/oauth2/token', $this->tokenEndpoint),
             [
                 'body' => $body,
             ]

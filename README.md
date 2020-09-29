@@ -31,6 +31,7 @@ services:
         arguments:
             $httpClient: "@http_client"
             $authEndpoint: "https://mon-compte-particulier.enedis.fr"
+            $tokenEndpoint: "https://gw.prd.api.enedis.fr "
             $dataEndpoint: "https://gw.prd.api.enedis.fr"
             $clientId: "YOUR_CLIENT_ID"
             $clientSecret: "YOUR_CLIENT_SECRET"
@@ -49,6 +50,7 @@ use Aeneria\EnedisDataConnectApi\Services\DataConnectService;
 $dataConnect = new DataConnectService(
     HttpClient::create(),
     "https://mon-compte-particulier.enedis.fr",
+    "https://gw.prd.api.enedis.fr "
     "https://gw.prd.api.enedis.fr",
     "YOUR_CLIENT_ID",
     "YOUR_CLIENT_SECRET",

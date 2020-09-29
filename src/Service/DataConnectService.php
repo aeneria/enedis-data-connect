@@ -18,9 +18,9 @@ class DataConnectService implements DataConnectServiceInterface
     /** @var CustomersService */
     private $customersService;
 
-    public function __construct(HttpClientInterface $httpClient, string $authEndpoint, string $dataEndpoint, string $clientId, string $clientSecret, string $redirectUri)
+    public function __construct(HttpClientInterface $httpClient, string $authEndpoint, string $tokenEndpoint, string $dataEndpoint, string $clientId, string $clientSecret, string $redirectUri)
     {
-        $this->authorizeV1Service = new AuthorizeV1Service($httpClient, $authEndpoint, $clientId, $clientSecret, $redirectUri);
+        $this->authorizeV1Service = new AuthorizeV1Service($httpClient, $authEndpoint, $tokenEndpoint, $clientId, $clientSecret, $redirectUri);
         $this->meteringDataV4Service = new MeteringDataV4Service($httpClient, $dataEndpoint);
         $this->customersService = new CustomersService($httpClient, $dataEndpoint);
     }
