@@ -80,11 +80,14 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
 
     private function requestToken(string $grantType, string $codeOrToken): Token
     {
+        $query = [
+            'redirect_uri' => $this->redirectUri,
+        ];
+
         $body = [
             'grant_type' => $grantType,
             'client_id' => $this->clientId,
             'client_secret' => $this->clientSecret,
-            'redirect_uri' => $this->redirectUri,
         ];
 
         switch ($grantType) {
@@ -106,6 +109,7 @@ class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1Servic
             'POST',
             \sprintf('%s/v1/oauth2/token', $this->tokenEndpoint),
             [
+                'query' => $query,
                 'body' => $body,
             ]
         );
