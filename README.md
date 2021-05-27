@@ -43,7 +43,7 @@ Or you can declare it in your code this way:
 ```php
 <?php
 
-use Aeneria\EnedisDataConnectApi\Services\DataConnectService;
+use Aeneria\EnedisDataConnectApi\Service\DataConnectService;
 
 //...
 
