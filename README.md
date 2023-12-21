@@ -5,7 +5,7 @@ Firstly developped to be used in [aeneria](https://gitlab.com/aeneria/aeneria-ap
 
 ## Requirements
 
-PHP 7.3 or higher
+PHP 8.1 or higher
 
 ## Getting started
 
