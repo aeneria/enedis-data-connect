@@ -47,19 +47,19 @@ final class AddressTest extends TestCase
         $address = Address::fromJson($data);
 
         self::assertInstanceOf(Address::class, $address);
-        self::assertSame('1358019319', $address->getCustomerId());
-        self::assertSame('12345678901234', $address->getUsagePointId());
-        self::assertSame('com', $address->getUsagePointStatus());
-        self::assertSame('AMM', $address->getMeterType());
-        self::assertSame('2 bis rue du capitaine Flam', $address->getStreet());
-        self::assertSame('lieudit Tourtouze', $address->getLocality());
-        self::assertSame('32400', $address->getPostalCode());
-        self::assertSame('32244', $address->getInseeCode());
-        self::assertSame('Maulichères', $address->getCity());
-        self::assertSame('France', $address->getCountry());
-        self::assertSame(43.687253, $address->getLatitude());
-        self::assertSame(-0.087957, $address->getLongitude());
-        self::assertSame(148.0, $address->getAltitude());
+        self::assertSame('1358019319', $address->customerId);
+        self::assertSame('12345678901234', $address->usagePointId);
+        self::assertSame('com', $address->usagePointStatus);
+        self::assertSame('AMM', $address->meterType);
+        self::assertSame('2 bis rue du capitaine Flam', $address->street);
+        self::assertSame('lieudit Tourtouze', $address->locality);
+        self::assertSame('32400', $address->postalCode);
+        self::assertSame('32244', $address->inseeCode);
+        self::assertSame('Maulichères', $address->city);
+        self::assertSame('France', $address->country);
+        self::assertSame(43.687253, $address->latitude);
+        self::assertSame(-0.087957, $address->longitude);
+        self::assertSame(148.0, $address->altitude);
         self::assertSame("2 bis rue du capitaine Flam, lieudit Tourtouze, 32400, Maulichères, France", $address . "");
     }
 
@@ -106,19 +106,19 @@ final class AddressTest extends TestCase
         );
 
         self::assertInstanceOf(Address::class, $deserializedAddress);
-        self::assertSame('1358019319', $deserializedAddress->getCustomerId());
-        self::assertSame('12345678901234', $deserializedAddress->getUsagePointId());
-        self::assertSame('com', $deserializedAddress->getUsagePointStatus());
-        self::assertSame('AMM', $deserializedAddress->getMeterType());
-        self::assertSame('2 bis rue du capitaine Flam', $deserializedAddress->getStreet());
-        self::assertSame('lieudit Tourtouze', $deserializedAddress->getLocality());
-        self::assertSame('32400', $deserializedAddress->getPostalCode());
-        self::assertSame('32244', $deserializedAddress->getInseeCode());
-        self::assertSame('Maulichères', $deserializedAddress->getCity());
-        self::assertSame('France', $deserializedAddress->getCountry());
-        self::assertSame(43.687253, $deserializedAddress->getLatitude());
-        self::assertSame(-0.087957, $deserializedAddress->getLongitude());
-        self::assertSame(148.0, $deserializedAddress->getAltitude());
+        self::assertSame('1358019319', $deserializedAddress->customerId);
+        self::assertSame('12345678901234', $deserializedAddress->usagePointId);
+        self::assertSame('com', $deserializedAddress->usagePointStatus);
+        self::assertSame('AMM', $deserializedAddress->meterType);
+        self::assertSame('2 bis rue du capitaine Flam', $deserializedAddress->street);
+        self::assertSame('lieudit Tourtouze', $deserializedAddress->locality);
+        self::assertSame('32400', $deserializedAddress->postalCode);
+        self::assertSame('32244', $deserializedAddress->inseeCode);
+        self::assertSame('Maulichères', $deserializedAddress->city);
+        self::assertSame('France', $deserializedAddress->country);
+        self::assertSame(43.687253, $deserializedAddress->latitude);
+        self::assertSame(-0.087957, $deserializedAddress->longitude);
+        self::assertSame(148.0, $deserializedAddress->altitude);
         self::assertSame("2 bis rue du capitaine Flam, lieudit Tourtouze, 32400, Maulichères, France", $address . "");
     }
 }
