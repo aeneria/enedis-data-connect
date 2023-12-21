@@ -1,6 +1,8 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
 
@@ -9,7 +11,7 @@ use Aeneria\EnedisDataConnectApi\Model\Address;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/customers/
  */
-interface CustomersServiceInterface
+interface CustomersClientInterface
 {
     public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address;
 }

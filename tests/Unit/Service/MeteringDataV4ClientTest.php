@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
-use Aeneria\EnedisDataConnectApi\Service\MeteringDataV4Service;
+use Aeneria\EnedisDataConnectApi\Client\MeteringDataV4Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-final class MeteringDataV4ServiceTest extends TestCase
+final class MeteringDataV4ClientTest extends TestCase
 {
     public function testRequestConsumptionLoadCurve()
     {
@@ -41,16 +43,16 @@ final class MeteringDataV4ServiceTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Service(
+        $service = new MeteringDataV4Client(
             $httpClient,
             'http://endpoint.fr'
         );
 
         $dataFromService = $service->requestConsumptionLoadCurve(
-          'accessToken',
-          'usagePoint',
-          new \DateTimeImmutable(),
-          new \DateTimeImmutable()
+            'accessToken',
+            'usagePoint',
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
         );
 
         self::assertEquals($data, $dataFromService);
@@ -87,16 +89,16 @@ final class MeteringDataV4ServiceTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Service(
+        $service = new MeteringDataV4Client(
             $httpClient,
             'http://endpoint.fr'
         );
 
         $dataFromService = $service->requestProductionLoadCurve(
-          'accessToken',
-          'usagePoint',
-          new \DateTimeImmutable(),
-          new \DateTimeImmutable()
+            'accessToken',
+            'usagePoint',
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
         );
 
         self::assertEquals($data, $dataFromService);
@@ -132,16 +134,16 @@ final class MeteringDataV4ServiceTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Service(
+        $service = new MeteringDataV4Client(
             $httpClient,
             'http://endpoint.fr'
         );
 
         $dataFromService = $service->requestDailyConsumption(
-          'accessToken',
-          'usagePoint',
-          new \DateTimeImmutable(),
-          new \DateTimeImmutable()
+            'accessToken',
+            'usagePoint',
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
         );
 
         self::assertEquals($data, $dataFromService);
@@ -177,16 +179,16 @@ final class MeteringDataV4ServiceTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Service(
+        $service = new MeteringDataV4Client(
             $httpClient,
             'http://endpoint.fr'
         );
 
         $dataFromService = $service->requestDailyProduction(
-          'accessToken',
-          'usagePoint',
-          new \DateTimeImmutable(),
-          new \DateTimeImmutable()
+            'accessToken',
+            'usagePoint',
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
         );
 
         self::assertEquals($data, $dataFromService);

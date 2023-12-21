@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectConsentException;
@@ -7,17 +9,17 @@ use Aeneria\EnedisDataConnectApi\Exception\DataConnectDataNotFoundException;
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectException;
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectQuotaExceededException;
 use Aeneria\EnedisDataConnectApi\Model\Token;
-use Aeneria\EnedisDataConnectApi\Service\AuthorizeV1Service;
+use Aeneria\EnedisDataConnectApi\Client\AuthorizeV1Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-final class AuthorizeV1ServiceTest extends TestCase
+final class AuthorizeV1ClientTest extends TestCase
 {
     public function testConsentPageUrl()
     {
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             HttpClient::create(),
             'endpoint',
             "endpoint",
@@ -51,7 +53,7 @@ final class AuthorizeV1ServiceTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             $httpClient,
             'http://endpoint.fr',
             "https://gw.hml.api.enedis.fr",
@@ -91,7 +93,7 @@ final class AuthorizeV1ServiceTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             $httpClient,
             'http://endpoint.fr',
             "https://gw.hml.api.enedis.fr",
@@ -117,7 +119,7 @@ final class AuthorizeV1ServiceTest extends TestCase
             new MockResponse('', ['http_code' => 403])
         );
 
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             $httpClient,
             'http://endpoint.fr',
             "https://gw.hml.api.enedis.fr",
@@ -137,7 +139,7 @@ final class AuthorizeV1ServiceTest extends TestCase
             new MockResponse('', ['http_code' => 404])
         );
 
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             $httpClient,
             'http://endpoint.fr',
             "https://gw.hml.api.enedis.fr",
@@ -157,7 +159,7 @@ final class AuthorizeV1ServiceTest extends TestCase
             new MockResponse('', ['http_code' => 429])
         );
 
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             $httpClient,
             'http://endpoint.fr',
             "https://gw.hml.api.enedis.fr",
@@ -177,7 +179,7 @@ final class AuthorizeV1ServiceTest extends TestCase
             new MockResponse('', ['http_code' => 500])
         );
 
-        $service = new AuthorizeV1Service(
+        $service = new AuthorizeV1Client(
             $httpClient,
             'http://endpoint.fr',
             "https://gw.hml.api.enedis.fr",

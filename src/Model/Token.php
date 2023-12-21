@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aeneria\EnedisDataConnectApi\Model;
 
 /**
@@ -52,11 +54,11 @@ class Token
             $data = \json_decode($jsonData);
 
             $token->accessToken = $data->access_token;
-            $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->issued_at / 1000));
+            $token->accessTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (string) (int) ($data->issued_at / 1000));
             $expirationDate = (new \DateTime())->add(new \DateInterval('PT' . $data->expires_in . 'S'));
             $token->accessTokenExpirationDate = \DateTimeImmutable::createFromMutable($expirationDate);
             $token->refreshToken = $data->refresh_token;
-            $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (int) ($data->refresh_token_issued_at / 1000));
+            $token->refreshTokenIssuedAt = \DateTimeImmutable::createFromFormat('U', (string) (int) ($data->refresh_token_issued_at / 1000));
             $token->usagePointsId = \trim($data->usage_points_id);
             $token->tokenType = $data->token_type;
             $token->scope = $data->scope;
@@ -132,7 +134,7 @@ class Token
 
     public function isAccessTokenStillValid(): bool
     {
-        return $this->accessTokenExpirationDate && ($this->accessTokenExpirationDate > new \DateTimeImmutable());
+        return $this->accessTokenExpirationDate > new \DateTimeImmutable();
     }
 
     public function getRefreshToken(): ?string

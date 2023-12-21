@@ -1,6 +1,8 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\Token;
 
@@ -9,16 +11,16 @@ use Aeneria\EnedisDataConnectApi\Model\Token;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/authorize-v1/
  */
-interface AuthorizeV1ServiceInterface
+interface AuthorizeV1ClientInterface
 {
     /**
      * Get a URL to DataConnect consent page.
      *
-     * @var string Durée du consentement demandé par l’application,
+     * @param string $duration Durée du consentement demandé par l’application,
      * au format ISO 8601. Cette durée sera affichée au consommateur et ne peut
      * excéder 3 ans. (ex : P6M pour 6 mois)
      *
-     * @var string Paramètre de sécurité permettant de maintenir l’état
+     * @param string $state Paramètre de sécurité permettant de maintenir l’état
      * entre la requête et la redirection.
      */
     public function getConsentPageUrl(string $duration, string $state): string;

@@ -1,15 +1,18 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
+use Aeneria\EnedisDataConnectApi\Client\CustomersClient;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
 
-class MockCustomersService extends AbstractApiService implements CustomersServiceInterface
+final class CustomersClientTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address
+    public function testRequestUsagePointAdresse()
     {
         $json = <<<JSON
         {
@@ -18,12 +21,7 @@ class MockCustomersService extends AbstractApiService implements CustomersServic
             "usage_points": [
               {
                 "usage_point": {
-                  "usage_point_id": "
-        JSON
-        ;
-        $json .= $usagePointId;
-        $json .= <<<JSON
-                  ",
+                  "usage_point_id": "123132132132",
                   "usage_point_status": "com",
                   "meter_type": "AMM",
                   "usage_point_addresses": {
@@ -45,7 +43,19 @@ class MockCustomersService extends AbstractApiService implements CustomersServic
           }
         }
         JSON;
+        $address = Address::fromJson($json);
 
-        return Address::fromJson($json);
+        $httpClient = new MockHttpClient(
+            new MockResponse($json)
+        );
+
+        $service = new CustomersClient(
+            $httpClient,
+            'http://endpoint.fr'
+        );
+
+        $addressFromService = $service->requestUsagePointAdresse('accessToken', 'usagePoint');
+
+        self::assertEquals($address, $addressFromService);
     }
 }

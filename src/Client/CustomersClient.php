@@ -1,6 +1,8 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -10,7 +12,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/customers/
  */
-class CustomersService extends AbstractApiService implements CustomersServiceInterface
+class CustomersClient extends AbstractApiClient implements CustomersClientInterface
 {
     /** @var HttpClientInterface */
     private $httpClient;

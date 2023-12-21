@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aeneria\EnedisDataConnectApi\Model;
 
 /**
@@ -30,10 +32,10 @@ namespace Aeneria\EnedisDataConnectApi\Model;
  */
 class MeteringData
 {
-    const TYPE_CONSUMPTION_LOAD_CURVE = 'CONSUMPTION_LOAD_CURVE';
-    const TYPE_PRODUCTION_LOAD_CURVE = 'PRODUCTION_LOAD_CURVE';
-    const TYPE_DAILY_CONSUMPTION = 'DAILY_CONSUMPTION';
-    const TYPE_DAILY_PRODUCTION = 'DAILY_PRODUCTION';
+    public const TYPE_CONSUMPTION_LOAD_CURVE = 'CONSUMPTION_LOAD_CURVE';
+    public const TYPE_PRODUCTION_LOAD_CURVE = 'PRODUCTION_LOAD_CURVE';
+    public const TYPE_DAILY_CONSUMPTION = 'DAILY_CONSUMPTION';
+    public const TYPE_DAILY_PRODUCTION = 'DAILY_PRODUCTION';
 
     /** @var string */
     private $usagePointId;
@@ -50,7 +52,7 @@ class MeteringData
     /** @var string */
     private $dataType;
 
-    /** @var DataConnectValue[] */
+    /** @var MeteringValue[] */
     private $values = [];
 
     public static function fromJson(string $jsonData, string $dataType): self

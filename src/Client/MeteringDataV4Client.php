@@ -1,6 +1,8 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -10,7 +12,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/metering-data-v4/
  */
-class MeteringDataV4Service extends AbstractApiService implements MeteringDataV4ServiceInterface
+class MeteringDataV4Client extends AbstractApiClient implements MeteringDataV4ClientInterface
 {
     /** @var HttpClientInterface */
     private $httpClient;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
@@ -98,9 +100,9 @@ final class AddressTest extends TestCase
         $address = Address::fromJson($data);
 
         $deserializedAddress = $serializer->deserialize(
-          $serializer->serialize($address, 'json'),
-          Address::class,
-          'json'
+            $serializer->serialize($address, 'json'),
+            Address::class,
+            'json'
         );
 
         self::assertInstanceOf(Address::class, $deserializedAddress);
