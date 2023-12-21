@@ -59,7 +59,7 @@ class MeteringData
             $period = $data->meter_reading->reading_type->measuring_period ?? null;
 
             foreach ($data->meter_reading->interval_reading as $value) {
-                if ($period && ! $value->interval_length) {
+                if ($period && !isset($value->interval_length)) {
                     $value->interval_length = $period;
                 }
                 $meteringData->values[] = MeteringValue::fromStdClass($value);
