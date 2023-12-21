@@ -1,6 +1,8 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectConsentException;
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectDataNotFoundException;
@@ -8,7 +10,7 @@ use Aeneria\EnedisDataConnectApi\Exception\DataConnectException;
 use Aeneria\EnedisDataConnectApi\Exception\DataConnectQuotaExceededException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-abstract class AbstractApiService
+abstract class AbstractApiClient
 {
     protected function checkResponse(ResponseInterface $response): void
     {

@@ -1,10 +1,12 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\Token;
 
-class MockAuthorizeV1Service extends AbstractApiService implements AuthorizeV1ServiceInterface
+class MockAuthorizeV1Client extends AbstractApiClient implements AuthorizeV1ClientInterface
 {
     /**
      * {@inheritdoc}

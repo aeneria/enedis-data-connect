@@ -1,6 +1,8 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\Token;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -10,10 +12,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/authorize-v1/
  */
-class AuthorizeV1Service extends AbstractApiService implements AuthorizeV1ServiceInterface
+class AuthorizeV1Client extends AbstractApiClient implements AuthorizeV1ClientInterface
 {
-    const GRANT_TYPE_CODE = 'authorization_code';
-    const GRANT_TYPE_TOKEN = 'refresh_token';
+    public const GRANT_TYPE_CODE = 'authorization_code';
+    public const GRANT_TYPE_TOKEN = 'refresh_token';
 
     /** @var HttpClientInterface */
     private $httpClient;

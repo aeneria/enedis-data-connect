@@ -1,10 +1,12 @@
 <?php
 
-namespace Aeneria\EnedisDataConnectApi\Service;
+declare(strict_types=1);
+
+namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
 
-class MockMeteringDataV4Service extends AbstractApiService implements MeteringDataV4ServiceInterface
+class MockMeteringDataV4Client extends AbstractApiClient implements MeteringDataV4ClientInterface
 {
     /**
      * {@inheritdoc}
@@ -19,7 +21,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
         $json .= '"reading_type": {"measurement_kind": "power", "unit": "W", "aggregate": "average"}, ';
         $json .= '"interval_reading": [';
 
-        $currentDatetime = \DateTime::createFromImmutable($start);
+        $currentDatetime = \DateTime::createFromInterface($start);
         $data = [];
         while ($currentDatetime < $end) {
             $data[] = '{"value": "100", "date": "' . $currentDatetime->format('Y-m-d H:i:s') . '", "interval_length": "PT30M", "measure_type": "B"}';
@@ -45,7 +47,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
         $json .= '"reading_type": {"measurement_kind": "power","unit": "W","aggregate": "average"},';
         $json .= '"interval_reading": [';
 
-        $currentDatetime = \DateTime::createFromImmutable($start);
+        $currentDatetime = \DateTime::createFromInterface($start);
         $data = [];
         while ($currentDatetime < $end) {
             $data[] = '{"value": "100","date": "' . $currentDatetime->format('Y-m-d H:i:s') . '","interval_length": "PT30M","measure_type": "B"}';
@@ -71,7 +73,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
         $json .= '"reading_type": {"measurement_kind": "energy", "measuring_period": "P1D", "unit": "Wh", "aggregate": "sum"}, ';
         $json .= '"interval_reading": [';
 
-        $currentDatetime = \DateTime::createFromImmutable($start);
+        $currentDatetime = \DateTime::createFromInterface($start);
         $data = [];
         while ($currentDatetime < $end) {
             $data[] = '{"value": "100", "date": "' . $currentDatetime->format('Y-m-d') . '"}';
@@ -97,7 +99,7 @@ class MockMeteringDataV4Service extends AbstractApiService implements MeteringDa
         $json .= '"reading_type": {"measurement_kind": "energy","measuring_period": "P1D","unit": "Wh","aggregate": "sum"},';
         $json .= '"interval_reading": [';
 
-        $currentDatetime = \DateTime::createFromImmutable($start);
+        $currentDatetime = \DateTime::createFromInterface($start);
         $data = [];
         while ($currentDatetime < $end) {
             $data[] = '{"value": "100","date": "' . $currentDatetime->format('Y-m-d') . '"}';
