@@ -34,14 +34,13 @@ final class MeteringDataTest extends TestCase
         }
         JSON;
 
-        $meteringData = MeteringData::fromJson($data, MeteringData::TYPE_DAILY_CONSUMPTION);
+        $meteringData = MeteringData::fromJson($data);
 
         self::assertInstanceOf(MeteringData::class, $meteringData);
-        self::assertSame("16401220101758", $meteringData->getUsagePointId());
+        self::assertSame("16401220101758", $meteringData->usagePointId);
         self::assertSame("2019-05-06", $meteringData->start->format('Y-m-d'));
         self::assertSame("2019-05-12", $meteringData->end->format('Y-m-d'));
         self::assertSame("Wh", $meteringData->unit);
-        self::assertSame(MeteringData::TYPE_DAILY_CONSUMPTION, $meteringData->dataType);
         self::assertCount(1, $meteringData->values);
     }
 }

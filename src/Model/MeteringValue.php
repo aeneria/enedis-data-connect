@@ -19,7 +19,7 @@ class MeteringValue
     public float $value;
     public \DateTimeImmutable $date;
     public ?\DateInterval $intervalLength = null;
-    public string $rawData;
+    public \stdClass $rawData;
 
     public static function fromStdClass(\stdClass $data): self
     {
