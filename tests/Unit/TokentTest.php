@@ -28,7 +28,7 @@ final class TokenTest extends TestCase
         $token = Token::fromJson($data);
 
         self::assertInstanceOf(Token::class, $token);
-        self::assertSame("WeOAFUQA7KjyvWRujg6pqCNshq6pxJaC497Ubz3bku12lF4SW5Dws5", $token->accessToken);
+        self::assertSame("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik5HRTNaVEkwWVRnMk1HRm1ZVFppTWpCak16WXlNRE0wTkRrM1lXRXpNVGRtT0RSbU1UWmhNUT09In0", $token->accessToken);
         self::assertTrue($token->isAccessTokenStillValid());
     }
 }

@@ -29,7 +29,9 @@ class MeteringValue
         try {
             $meteringValue->value = \floatval($data->value);
             $meteringValue->date = \DateTimeImmutable::createFromFormat('!Y-m-d H:i:s', $data->date) ?: \DateTimeImmutable::createFromFormat('!Y-m-d', $data->date);
-            $meteringValue->intervalLength = $data->interval_length ? new \DateInterval($data->interval_length) : null;
+            if (isset($data->interval_length)) {
+                $meteringValue->intervalLength = $data->interval_length ? new \DateInterval($data->interval_length) : null;
+            }
         } catch (\Exception $e) {
             throw new \InvalidArgumentException(\sprintf(
                 "La conversion vers l'objet MeteringValue a échoué : %s",
