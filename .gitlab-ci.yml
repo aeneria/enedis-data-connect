@@ -2,8 +2,8 @@ default:
   image: php:8.1
   before_script:
     - apt-get update -yqq
-    - apt-get install git zip zlib1g-dev libzip-dev libxml2-dev libpng-dev libghc-curl-dev libldb-dev libldap2-dev -yqq
-    - docker-php-ext-install zip xml intl mbstring gd curl bcmath opcache
+    - apt-get install git zip zlib1g-dev libzip-dev libxml2-dev libpng-dev libghc-curl-dev libldb-dev -yqq
+    - docker-php-ext-install zip xml intl gd curl bcmath opcache
     - pecl install xdebug \
       && docker-php-ext-enable xdebug
     - curl -sS https://getcomposer.org/installer | php
