@@ -8,16 +8,16 @@ class MockDataConnectClient implements DataConnectClientInterface
 {
     /** @var AuthorizeV1ClientInterface */
     private $authorizeV1Client;
-    /** @var MeteringDataV4ClientInterface */
-    private $meteringDataV4Client;
-    /** @var CustomersClientInterface */
-    private $customersClient;
+    /** @var MeteringDataV5ClientInterface */
+    private $meteringDataV5Client;
+    /** @var CustomersV5ClientInterface */
+    private $customersV5Client;
 
     public function __construct()
     {
         $this->authorizeV1Client = new MockAuthorizeV1Client();
-        $this->meteringDataV4Client = new MockMeteringDataV4Client();
-        $this->customersClient = new MockCustomersClient();
+        $this->meteringDataV5Client = new MockMeteringDataV5Client();
+        $this->customersV5Client = new MockCustomersV5Client();
     }
 
     public function getAuthorizeV1Client(): AuthorizeV1ClientInterface
@@ -25,13 +25,13 @@ class MockDataConnectClient implements DataConnectClientInterface
         return $this->authorizeV1Client;
     }
 
-    public function getMeteringDataV4Client(): MeteringDataV4ClientInterface
+    public function getMeteringDataV5Client(): MeteringDataV5ClientInterface
     {
-        return $this->meteringDataV4Client;
+        return $this->meteringDataV5Client;
     }
 
-    public function getCustomersClient(): CustomersClientInterface
+    public function getCustomersV5Client(): CustomersV5ClientInterface
     {
-        return $this->customersClient;
+        return $this->customersV5Client;
     }
 }

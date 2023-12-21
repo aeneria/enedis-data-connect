@@ -12,7 +12,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/customers/
  */
-class CustomersClient extends AbstractApiClient implements CustomersClientInterface
+class CustomersV5Client extends AbstractApiClient implements CustomersV5ClientInterface
 {
     /** @var HttpClientInterface */
     private $httpClient;
@@ -31,7 +31,7 @@ class CustomersClient extends AbstractApiClient implements CustomersClientInterf
      */
     public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address
     {
-        $response = $this->requestCustomersData('usage_points/addresses', $accessToken, $usagePointId);
+        $response = $this->requestCustomersData('customers_upa/v5/usage_points/addresses', $accessToken, $usagePointId);
 
         return Address::fromJson($response);
     }
@@ -40,7 +40,7 @@ class CustomersClient extends AbstractApiClient implements CustomersClientInterf
     {
         $response = $this->httpClient->request(
             'GET',
-            \sprintf('%s/v3/customers/%s', $this->dataEndpoint, $endpoint),
+            \sprintf('%s/%s', $this->dataEndpoint, $endpoint),
             [
                 'headers' => [
                     'accept' => 'application/json',

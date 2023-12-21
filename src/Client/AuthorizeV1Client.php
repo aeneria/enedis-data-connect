@@ -67,51 +67,18 @@ class AuthorizeV1Client extends AbstractApiClient implements AuthorizeV1ClientIn
     /**
      * {@inheritdoc}
      */
-    public function requestTokenFromCode(string $code): Token
+    public function requestAuthorizationToken(): Token
     {
-        return $this->requestToken(self::GRANT_TYPE_CODE, $code);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function requestTokenFromRefreshToken(string $refreshToken): Token
-    {
-        return $this->requestToken(self::GRANT_TYPE_TOKEN, $refreshToken);
-    }
-
-    private function requestToken(string $grantType, string $codeOrToken): Token
-    {
-        $query = [
-            'redirect_uri' => $this->redirectUri,
-        ];
-
         $body = [
-            'grant_type' => $grantType,
+            'grant_type' => 'client_credentials',
             'client_id' => $this->clientId,
             'client_secret' => $this->clientSecret,
         ];
 
-        switch ($grantType) {
-            case self::GRANT_TYPE_CODE:
-                $body['code'] = $codeOrToken;
-                break;
-            case self::GRANT_TYPE_TOKEN:
-                $body['refresh_token'] = $codeOrToken;
-                break;
-            default:
-                throw new \InvalidArgumentException(\sprintf(
-                    'Only "%s" or "%s" grant types are supported',
-                    self::GRANT_TYPE_TOKEN,
-                    self::GRANT_TYPE_CODE
-                ));
-        }
-
         $response = $this->httpClient->request(
             'POST',
-            \sprintf('%s/v1/oauth2/token', $this->tokenEndpoint),
+            \sprintf('%s/oauth2/v3/token', $this->authEndpoint),
             [
-                'query' => $query,
                 'body' => $body,
             ]
         );

@@ -13,7 +13,7 @@ interface DataConnectClientInterface
 {
     public function getAuthorizeV1Client(): AuthorizeV1ClientInterface;
 
-    public function getMeteringDataV4Client(): MeteringDataV4ClientInterface;
+    public function getMeteringDataV5Client(): MeteringDataV5ClientInterface;
 
-    public function getCustomersClient(): CustomersClientInterface;
+    public function getCustomersV5Client(): CustomersV5ClientInterface;
 }

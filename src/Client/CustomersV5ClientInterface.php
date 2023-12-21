@@ -11,7 +11,7 @@ use Aeneria\EnedisDataConnectApi\Model\Address;
  *
  * @see https://datahub-enedis.fr/data-connect/documentation/customers/
  */
-interface CustomersClientInterface
+interface CustomersV5ClientInterface
 {
     public function requestUsagePointAdresse(string $accessToken, string $usagePointId): Address;
 }

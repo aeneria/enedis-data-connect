@@ -6,7 +6,7 @@ namespace Aeneria\EnedisDataConnectApi\Client;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
 
-class MockCustomersClient extends AbstractApiClient implements CustomersClientInterface
+class MockCustomersV5Client extends AbstractApiClient implements CustomersV5ClientInterface
 {
     /**
      * {@inheritdoc}

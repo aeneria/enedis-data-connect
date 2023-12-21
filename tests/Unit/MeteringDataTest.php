@@ -38,10 +38,10 @@ final class MeteringDataTest extends TestCase
 
         self::assertInstanceOf(MeteringData::class, $meteringData);
         self::assertSame("16401220101758", $meteringData->getUsagePointId());
-        self::assertSame("2019-05-06", $meteringData->getStart()->format('Y-m-d'));
-        self::assertSame("2019-05-12", $meteringData->getEnd()->format('Y-m-d'));
-        self::assertSame("Wh", $meteringData->getUnit());
-        self::assertSame(MeteringData::TYPE_DAILY_CONSUMPTION, $meteringData->getDataType());
-        self::assertCount(1, $meteringData->getValues());
+        self::assertSame("2019-05-06", $meteringData->start->format('Y-m-d'));
+        self::assertSame("2019-05-12", $meteringData->end->format('Y-m-d'));
+        self::assertSame("Wh", $meteringData->unit);
+        self::assertSame(MeteringData::TYPE_DAILY_CONSUMPTION, $meteringData->dataType);
+        self::assertCount(1, $meteringData->values);
     }
 }

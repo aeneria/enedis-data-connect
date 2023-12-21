@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Model\Address;
-use Aeneria\EnedisDataConnectApi\Client\CustomersClient;
+use Aeneria\EnedisDataConnectApi\Client\CustomersV5Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-final class CustomersClientTest extends TestCase
+final class CustomersV5ClientTest extends TestCase
 {
     public function testRequestUsagePointAdresse()
     {
@@ -49,7 +49,7 @@ final class CustomersClientTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new CustomersClient(
+        $service = new CustomersV5Client(
             $httpClient,
             'http://endpoint.fr'
         );

@@ -70,33 +70,16 @@ Then you can use the API:
 $dataConnect->getAuthorizeV1Service()->getConsentPageUrl('P6M', $state);
 
 // Getting Tokens form Code
-$token = $dataConnect->getAuthorizeV1Service()->requestTokenFromCode($param['code']);
-
-// Getting Tokens from Refresh Token
-$token = $dataConnect->getAuthorizeV1Service()->requestTokenFromRefreshToken($token->getRefreshToken());
+$token = $dataConnect->getAuthorizeV1Service()->requestAuthorizationToken();
 
 // Getting consumption data
-$meteringData = $dataConnect->getMeteringDataV4Service()->requestDailyConsumption(
+$meteringData = $dataConnect->getMeteringDataV5Service()->requestDailyConsumption(
     $token->getAccessToken(),
     $token->getUsagePointsId(),
     new \DateTimeImmutable('8 days ago'),
     new \DateTimeImmutable('yesterday')
 );
-$meteringData = $dataConnect->getMeteringDataV4Service()->requestConsumptionLoadCurve(
-    $token->getAccessToken(),
-    $token->getUsagePointsId(),
-    new \DateTimeImmutable('2 days ago'),
-    new \DateTimeImmutable('yesterday')
-);
-
-// Getting production data
-$meteringData = $dataConnect->getMeteringDataV4Service()->requestDailyProduction(
-    $token->getAccessToken(),
-    $token->getUsagePointsId(),
-    new \DateTimeImmutable('8 days ago'),
-    new \DateTimeImmutable('yesterday')
-);
-$meteringData = $dataConnect->getMeteringDataV4Service()->requestProductionLoadCurve(
+$meteringData = $dataConnect->getMeteringDataV5Service()->requestConsumptionLoadCurve(
     $token->getAccessToken(),
     $token->getUsagePointsId(),
     new \DateTimeImmutable('2 days ago'),
@@ -104,7 +87,7 @@ $meteringData = $dataConnect->getMeteringDataV4Service()->requestProductionLoadC
 );
 
 // Getting customer data
-$address = $dataConnect->getCustomersService()->requestUsagePointAdresse(
+$address = $dataConnect->getCustomersV5Service()->requestUsagePointAdresse(
     $token->getAccessToken(),
     $token->getUsagePointsId()
 );

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Model\MeteringData;
-use Aeneria\EnedisDataConnectApi\Client\MeteringDataV4Client;
+use Aeneria\EnedisDataConnectApi\Client\MeteringDataV5Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-final class MeteringDataV4ClientTest extends TestCase
+final class MeteringDataV5ClientTest extends TestCase
 {
     public function testRequestConsumptionLoadCurve()
     {
@@ -43,7 +43,7 @@ final class MeteringDataV4ClientTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Client(
+        $service = new MeteringDataV5Client(
             $httpClient,
             'http://endpoint.fr'
         );
@@ -89,7 +89,7 @@ final class MeteringDataV4ClientTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Client(
+        $service = new MeteringDataV5Client(
             $httpClient,
             'http://endpoint.fr'
         );
@@ -134,7 +134,7 @@ final class MeteringDataV4ClientTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Client(
+        $service = new MeteringDataV5Client(
             $httpClient,
             'http://endpoint.fr'
         );
@@ -179,7 +179,7 @@ final class MeteringDataV4ClientTest extends TestCase
             new MockResponse($json)
         );
 
-        $service = new MeteringDataV4Client(
+        $service = new MeteringDataV5Client(
             $httpClient,
             'http://endpoint.fr'
         );

@@ -26,12 +26,7 @@ interface AuthorizeV1ClientInterface
     public function getConsentPageUrl(string $duration, string $state): string;
 
     /**
-     * Get DataConnectToken from a grant code.
+     * Get Authorization Token from credentials.
      */
-    public function requestTokenFromCode(string $code): Token;
-
-    /**
-     * Get DataConnectToken from a refreshToken.
-     */
-    public function requestTokenFromRefreshToken(string $refreshToken): Token;
+    public function requestAuthorizationToken(): Token;
 }

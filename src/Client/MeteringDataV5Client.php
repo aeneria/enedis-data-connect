@@ -10,9 +10,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * Implements Metering Data V4
  *
- * @see https://datahub-enedis.fr/data-connect/documentation/metering-data-v4/
+ * @see https://datahub-enedis.fr/services-api/data-connect/documentation/metering-v5-consommation-quotidienne/
  */
-class MeteringDataV4Client extends AbstractApiClient implements MeteringDataV4ClientInterface
+class MeteringDataV5Client extends AbstractApiClient implements MeteringDataV5ClientInterface
 {
     /** @var HttpClientInterface */
     private $httpClient;
@@ -31,23 +31,7 @@ class MeteringDataV4Client extends AbstractApiClient implements MeteringDataV4Cl
     public function requestConsumptionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
         return $this->requestMeteringData(
-            'consumption_load_curve',
-            MeteringData::TYPE_CONSUMPTION_LOAD_CURVE,
-            $accessToken,
-            $usagePointId,
-            $start,
-            $end
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function requestProductionLoadCurve(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
-    {
-        return $this->requestMeteringData(
-            'production_load_curve',
-            MeteringData::TYPE_PRODUCTION_LOAD_CURVE,
+            'metering_data_clc/v5/consumption_load_curve',
             $accessToken,
             $usagePointId,
             $start,
@@ -61,8 +45,7 @@ class MeteringDataV4Client extends AbstractApiClient implements MeteringDataV4Cl
     public function requestDailyConsumption(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
         return $this->requestMeteringData(
-            'daily_consumption',
-            MeteringData::TYPE_DAILY_CONSUMPTION,
+            'metering_data_dc/v5/daily_consumption',
             $accessToken,
             $usagePointId,
             $start,
@@ -70,29 +53,15 @@ class MeteringDataV4Client extends AbstractApiClient implements MeteringDataV4Cl
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function requestDailyProduction(string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
-    {
-        return $this->requestMeteringData(
-            'daily_production',
-            MeteringData::TYPE_DAILY_PRODUCTION,
-            $accessToken,
-            $usagePointId,
-            $start,
-            $end
-        );
-    }
 
     /**
      * Request MeterinData.
      */
-    private function requestMeteringData(string $endpoint, string $dataType, string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
+    private function requestMeteringData(string $endpoint, string $accessToken, string $usagePointId, \DateTimeInterface $start, \DateTimeInterface $end): MeteringData
     {
         $response = $this->httpClient->request(
             'GET',
-            \sprintf('%s/v4/metering_data/%s', $this->dataEndpoint, $endpoint),
+            \sprintf('%s/%s', $this->dataEndpoint, $endpoint),
             [
                 'headers' => [
                     'accept' => 'application/json',
@@ -108,6 +77,6 @@ class MeteringDataV4Client extends AbstractApiClient implements MeteringDataV4Cl
 
         $this->checkResponse($response);
 
-        return MeteringData::fromJson($response->getContent(), $dataType);
+        return MeteringData::fromJson($response->getContent());
     }
 }

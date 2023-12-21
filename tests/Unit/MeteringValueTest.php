@@ -22,8 +22,8 @@ final class MeteringValueTest extends TestCase
         $meteringValue = MeteringValue::fromStdClass(\json_decode($data));
 
         self::assertInstanceOf(MeteringValue::class, $meteringValue);
-        self::assertSame("2019-05-06", $meteringValue->getDate()->format('Y-m-d'));
-        self::assertSame(540.0, $meteringValue->getValue());
-        self::assertEquals(new \DateInterval('P1D'), $meteringValue->getIntervalLength());
+        self::assertSame("2019-05-06", $meteringValue->date->format('Y-m-d'));
+        self::assertSame(540.0, $meteringValue->value);
+        self::assertEquals(new \DateInterval('P1D'), $meteringValue->intervalLength);
     }
 }

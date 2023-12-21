@@ -16,18 +16,15 @@ namespace Aeneria\EnedisDataConnectApi\Model;
  */
 class MeteringValue
 {
-    /** @var float */
-    private $value;
-
-    /** @var \DateTimeImmutable */
-    private $date;
-
-    /** @var \DateInterval */
-    private $intervalLength;
+    public float $value;
+    public \DateTimeImmutable $date;
+    public ?\DateInterval $intervalLength = null;
+    public string $rawData;
 
     public static function fromStdClass(\stdClass $data): self
     {
         $meteringValue = new self();
+        $meteringValue->rawData = $data;
 
         try {
             $meteringValue->value = \floatval($data->value);
@@ -41,41 +38,5 @@ class MeteringValue
         }
 
         return $meteringValue;
-    }
-
-    public function getValue(): ?float
-    {
-        return $this->value;
-    }
-
-    public function setValue(?float $value): self
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    public function getIntervalLength(): ?\DateInterval
-    {
-        return $this->intervalLength;
-    }
-
-    public function setIntervalLength(?\DateInterval $intervalLength): self
-    {
-        $this->intervalLength = $intervalLength;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeImmutable
-    {
-        return $this->date;
-    }
-
-    public function setDate(?\DateTimeImmutable $date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 }
