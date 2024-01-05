@@ -6,11 +6,6 @@ namespace Aeneria\EnedisDataConnectApi\Tests\Unit;
 
 use Aeneria\EnedisDataConnectApi\Model\Token;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 final class TokenTest extends TestCase
 {

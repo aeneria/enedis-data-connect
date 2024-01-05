@@ -14,16 +14,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class MeteringDataV5Client extends AbstractApiClient implements MeteringDataV5ClientInterface
 {
-    /** @var HttpClientInterface */
-    private $httpClient;
-    /** @var string */
-    private $dataEndpoint;
-
-    public function __construct(HttpClientInterface $httpClient, string $dataEndpoint)
-    {
-        $this->httpClient = $httpClient;
-        $this->dataEndpoint = $dataEndpoint;
-    }
+    public function __construct(
+        private HttpClientInterface $httpClient,
+        private string $dataEndpoint
+    ) { }
 
     /**
      * {@inheritdoc}

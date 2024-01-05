@@ -17,38 +17,14 @@ class AuthorizeV1Client extends AbstractApiClient implements AuthorizeV1ClientIn
     public const GRANT_TYPE_CODE = 'authorization_code';
     public const GRANT_TYPE_TOKEN = 'refresh_token';
 
-    /** @var HttpClientInterface */
-    private $httpClient;
-
-    /** @var string */
-    private $authEndpoint;
-    /** @var string */
-    private $tokenEndpoint;
-
-    /** @var string */
-    private $clientId;
-    /** @var string */
-    private $clientSecret;
-    /** @var string */
-    private $redirectUri;
-
     public function __construct(
-        HttpClientInterface $httpClient,
-        string $authEndpoint,
-        string $tokenEndpoint,
-        string $clientId,
-        string $clientSecret,
-        string $redirectUri
-    ) {
-        $this->httpClient = $httpClient;
-
-        $this->authEndpoint = $authEndpoint;
-        $this->tokenEndpoint = $tokenEndpoint;
-
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
-        $this->redirectUri = $redirectUri;
-    }
+        private HttpClientInterface $httpClient,
+        private string $authEndpoint,
+        private string $tokenEndpoint,
+        private string $clientId,
+        private string $clientSecret,
+        private string $redirectUri
+    ) { }
 
     /**
      * {@inheritdoc}
@@ -77,7 +53,7 @@ class AuthorizeV1Client extends AbstractApiClient implements AuthorizeV1ClientIn
 
         $response = $this->httpClient->request(
             'POST',
-            \sprintf('%s/oauth2/v3/token', $this->authEndpoint),
+            \sprintf('%s/oauth2/v3/token', $this->tokenEndpoint),
             [
                 'body' => $body,
             ]

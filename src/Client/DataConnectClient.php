@@ -20,8 +20,15 @@ class DataConnectClient implements DataConnectClientInterface
     /** @var CustomersV5Client */
     private $customersV5Client;
 
-    public function __construct(HttpClientInterface $httpClient, string $authEndpoint, string $tokenEndpoint, string $dataEndpoint, string $clientId, string $clientSecret, string $redirectUri)
-    {
+    public function __construct(
+        HttpClientInterface $httpClient,
+        string $authEndpoint,
+        string $tokenEndpoint,
+        string $dataEndpoint,
+        string $clientId,
+        string $clientSecret,
+        string $redirectUri
+    ) {
         $this->authorizeV1Client = new AuthorizeV1Client($httpClient, $authEndpoint, $tokenEndpoint, $clientId, $clientSecret, $redirectUri);
         $this->meteringDataV5Client = new MeteringDataV5Client($httpClient, $dataEndpoint);
         $this->customersV5Client = new CustomersV5Client($httpClient, $dataEndpoint);
