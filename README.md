@@ -1,5 +1,8 @@
 # Enedis Data Connect API: a small library to use a part of Enedis Data Connect API with PHP
 
+💀💀💀 This lib is no longer maintained 💀💀💀
+see aeneria-app#51 to read more about it
+
 Firstly developped to be used in [aeneria](https://gitlab.com/aeneria/aeneria-app), this small library let you use easily
 [Enedis Data Connect API](https://datahub-enedis.fr/data-connect/).
 
